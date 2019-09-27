@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/pagina_inicial">
+
+    <fragment
+        android:id="@+id/pagina_inicial"
+        android:name="ifsp.doarmario.menu.view.ui.pagina_inicial.PaginaInicialFragment"
+        android:label="@string/pagina_inicial"
+        tools:layout="@layout/fragment_pagina_inicial" />
+
+    <fragment
+        android:id="@+id/perfil"
+        android:name="ifsp.doarmario.menu.view.ui.sobre_mim.SobreMimFragment"
+        android:label="@string/sobre_mim"
+        tools:layout="@layout/fragment_sobre_mim" />
+
+    <fragment
+        android:id="@+id/cadastro_pecas"
+        android:name="ifsp.doarmario.menu.view.ui.cadastra_pecas.CadastroPecasFragment"
+        android:label="@string/cadastrar_peças"
+        tools:layout="@layout/fragment_cadastro_pecas" />
+
+    <fragment
+        android:id="@+id/monta_pecas"
+        android:name="ifsp.doarmario.menu.view.ui.monta_looks.MontaLooksFragment"
+        android:label="@string/montar_looks"
+        tools:layout="@layout/fragment_monta_looks" />
+
+    <fragment
+        android:id="@+id/listagem_pecas"
+        android:name="ifsp.doarmario.menu.view.ui.lista_pecas.ListaPecasFragment"
+        android:label="@string/pecas"
+        tools:layout="@layout/fragment_lista_pecas" />
+
+    <fragment
+        android:id="@+id/listagem_doadas"
+        android:name="ifsp.doarmario.menu.view.ui.lista_pecas_doadas.ListaPecasDoadasFragment"
+        android:label="@string/peças_doadas"
+        tools:layout="@layout/fragment_lista_pecas_doadas" />
+
+    <fragment
+        android:id="@+id/listagem_naoutilizadas"
+        android:name="ifsp.doarmario.menu.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment"
+        android:label="@string/peças_nao_utilizadas"
+        tools:layout="@layout/fragment_lista_pecas_nao_utilizadas" />
+
+    <fragment
+        android:id="@+id/listagem_montagens"
+        android:name="ifsp.doarmario.menu.view.ui.montagens.MontagensFragment"
+        android:label="@string/montagens"
+        tools:layout="@layout/fragment_montagens" />
+    <fragment
+        android:id="@+id/sobre_desenvolvedoras"
+        android:name="ifsp.doarmario.menu.view.ui.desenvolvedoras.DesenvolvedorasFragment"
+        android:label="@string/sobre_as_desenvolvedoras"
+        tools:layout="@layout/fragment_sobre_desenvolvedoras" />
+
+</navigation>

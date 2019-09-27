@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/pagina_inicial"
+            android:icon="@drawable/menu_pagina_inicial"
+            android:title="@string/pagina_inicial" />
+        <item
+            android:id="@+id/cadastro_pecas"
+            android:icon="@drawable/menu_cadastropecas"
+            android:title="@string/cadastrar_peças" />
+        <item
+            android:id="@+id/monta_pecas"
+            android:icon="@drawable/menu_montalooks"
+            android:title="@string/montar_looks" />
+    </group>
+
+    <item android:title="Listagens" android:checkableBehavior="single">
+        <menu>
+            <item
+                android:id="@+id/listagem_pecas"
+                android:icon="@drawable/menu_listagempecas"
+                android:title="@string/pecas" />
+
+            <item
+                android:id="@+id/listagem_doadas"
+                android:icon="@drawable/menu_listapecasdoadas"
+                android:title="@string/peças_doadas" />
+
+            <item
+                android:id="@+id/listagem_naoutilizadas"
+                android:icon="@drawable/menu_listapecasnaoutilizadas"
+                android:title="@string/peças_nao_utilizadas" />
+            <item
+                android:id="@+id/listagem_montagens"
+                android:icon="@drawable/menu_listamontagem"
+                android:title="@string/montagens" />
+        </menu>
+    </item>
+    <item android:title="" android:checkableBehavior="single">
+        <menu>
+            <item
+                android:id="@+id/perfil"
+                android:icon="@drawable/menu_perfil"
+                android:title="@string/sobre_mim" />
+
+            <item
+                android:id="@+id/sobre_desenvolvedoras"
+                android:icon="@drawable/menu_desenvolvedoras"
+                android:title="@string/sobre_as_desenvolvedoras" />
+        </menu>
+    </item>
+</menu>

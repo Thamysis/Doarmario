@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="0dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <ImageView
+            android:src="@drawable/cropped"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageView10"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:orientation="horizontal"
+            android:layout_margin="8dp"
+            >
+            <Button
+                android:text="Doei"
+                android:textColor="@color/colorAccent"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_doei"
+                android:layout_weight="1"
+                android:background="@drawable/bg_botao_adicionar"
+                android:layout_marginRight="2dp"
+                />
+
+
+            <Button
+                android:text="Usei"
+                android:textColor="@color/colorAccent"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_usei"
+                android:background="@drawable/bg_botao_adicionar"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"/>
+        </LinearLayout>
+
+    </LinearLayout>

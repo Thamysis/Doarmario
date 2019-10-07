@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item name="menu_pagina_inicial" type="drawable">@drawable/menu_pagina_inicial</item>
     <item name="menu_cadastropecas" type="drawable">@drawable/menu_cadastropecas</item>
     <item name="menu_desenvolvedoras" type="drawable">@drawable/menu_desenvolvedoras</item>

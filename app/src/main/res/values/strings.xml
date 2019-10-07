@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Doarmário</string>
+    <string name="app_name" translatable="false">Doarmário</string>
     <string name="splash_doarmario">Doarmário, 2019.</string>
 
     <string name="titulo_login">Login</string>
@@ -36,17 +36,7 @@
 
     <string name="enviar_email_sucesso">E-mail enviado com sucesso</string>
     <string name="enviar_email_erro">Erro ao enviar email de recuperação de senha</string>
-
-    <string name="usuario_inexistente">Usuario inexistente</string>
-    <string name="email_inexistente">Email inexistente</string>
-    <string name="senha_incorreta">Senha incorreta!</string>
-
-    <!-- CADASTRO USUÁRIO -->
-    <string name="usuario_ja_existente">Erro, nome de usuário já existe!</string>
-    <string name="email_ja_existente">Erro, e-mail já cadastrado!</string>
-    <string name="campo_vazio">Campo vazio! Esse campo deve ser preenchido!</string>
-
-    <string name="bem_vindo">Bem-vindx ao sistema, </string>
+    <string name="usuario_nao_existe">Usuario não existe</string>
 
 
     <!-- CRUD USUARIO -->

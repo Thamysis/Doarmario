@@ -51,10 +51,6 @@
                 android:id="@+id/sobre_desenvolvedoras"
                 android:icon="@drawable/menu_desenvolvedoras"
                 android:title="@string/sobre_as_desenvolvedoras" />
-            <item
-                android:id="@+id/sair_conta"
-                android:icon="@drawable/menu_sair"
-                android:title="@string/sair" />
         </menu>
     </item>
 </menu>

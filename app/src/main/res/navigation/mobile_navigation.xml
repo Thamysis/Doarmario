@@ -52,10 +52,17 @@
         android:name="ifsp.doarmario.view.ui.montagens.MontagensFragment"
         android:label="@string/montagens"
         tools:layout="@layout/fragment_montagens" />
+
     <fragment
         android:id="@+id/sobre_desenvolvedoras"
         android:name="ifsp.doarmario.view.ui.desenvolvedoras.DesenvolvedorasFragment"
         android:label="@string/sobre_as_desenvolvedoras"
         tools:layout="@layout/fragment_sobre_desenvolvedoras" />
+
+    <fragment
+        android:id="@+id/sair_conta"
+        android:name="ifsp.doarmario.view.ui.sair.SairFragment"
+        android:label="@string/sair"
+        tools:layout="@layout/fragment_pagina_inicial" />
 
 </navigation>

@@ -14,15 +14,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.UsuarioDao;
 import ifsp.doarmario.model.vo.Usuario;
 import ifsp.doarmario.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment;
 
-/*
-    V1 = 20-09-2019
-    V2 = 24-09-2019
- */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -76,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //mostrar dados do usuário no menu
+
+        Toast.makeText(this, getString(R.string.bem_vindo) + nomeUsuarioAtual , Toast.LENGTH_SHORT).show();
+
     }
 
     public void alerta(){
@@ -108,7 +106,4 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
-
 }

@@ -22,11 +22,7 @@
             android:layout_height="0dp"
             android:contentDescription="@string/app_name"
             android:paddingTop="@dimen/nav_header_vertical_spacing"
-<<<<<<< HEAD
             app:srcCompat="@mipmap/ic_launcher_round"
-=======
-            app:srcCompat="@mipmap/logo"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
             android:layout_weight="4"
             />
 

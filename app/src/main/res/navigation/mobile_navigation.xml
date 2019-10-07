@@ -7,90 +7,54 @@
 
     <fragment
         android:id="@+id/pagina_inicial"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.pagina_inicial.PaginaInicialFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.pagina_inicial.PaginaInicialFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/pagina_inicial"
         tools:layout="@layout/fragment_pagina_inicial" />
 
     <fragment
         android:id="@+id/perfil"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.sobre_mim.SobreMimFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.sobre_mim.SobreMimFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/sobre_mim"
         tools:layout="@layout/fragment_sobre_mim" />
 
     <fragment
         android:id="@+id/cadastro_pecas"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.cadastra_pecas.CadastroPecasFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.cadastra_pecas.CadastroPecasFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/cadastrar_peças"
         tools:layout="@layout/fragment_cadastro_pecas" />
 
     <fragment
         android:id="@+id/monta_pecas"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.monta_looks.MontaLooksFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.monta_looks.MontaLooksFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/montar_looks"
         tools:layout="@layout/fragment_monta_looks" />
 
     <fragment
         android:id="@+id/listagem_pecas"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.lista_pecas.ListaPecasFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.lista_pecas.ListaPecasFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/pecas"
         tools:layout="@layout/fragment_lista_pecas" />
 
     <fragment
         android:id="@+id/listagem_doadas"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.lista_pecas_doadas.ListaPecasDoadasFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.lista_pecas_doadas.ListaPecasDoadasFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/peças_doadas"
         tools:layout="@layout/fragment_lista_pecas_doadas" />
 
     <fragment
         android:id="@+id/listagem_naoutilizadas"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/peças_nao_utilizadas"
         tools:layout="@layout/fragment_lista_pecas_nao_utilizadas" />
 
     <fragment
         android:id="@+id/listagem_montagens"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.montagens.MontagensFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.montagens.MontagensFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/montagens"
         tools:layout="@layout/fragment_montagens" />
     <fragment
         android:id="@+id/sobre_desenvolvedoras"
-<<<<<<< HEAD
         android:name="ifsp.doarmario.view.ui.desenvolvedoras.DesenvolvedorasFragment"
-=======
-        android:name="ifsp.doarmario.menu.view.ui.desenvolvedoras.DesenvolvedorasFragment"
->>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:label="@string/sobre_as_desenvolvedoras"
         tools:layout="@layout/fragment_sobre_desenvolvedoras" />
 

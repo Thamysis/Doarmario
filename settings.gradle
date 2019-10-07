@@ -1,2 +1,6 @@
 include ':app'
+<<<<<<< HEAD
 rootProject.name='Doarmário'
+=======
+rootProject.name='Menu2'
+>>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964

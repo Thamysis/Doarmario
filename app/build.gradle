@@ -4,7 +4,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
+<<<<<<< HEAD
         applicationId "ifsp.doarmario"
+=======
+        applicationId "ifsp.doarmario.menu"
+>>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         minSdkVersion 15
         targetSdkVersion 29
         multiDexEnabled true

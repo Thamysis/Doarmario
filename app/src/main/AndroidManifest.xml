@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     package="ifsp.doarmario">
+=======
+    package="ifsp.doarmario.menu">
+>>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
 
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+<<<<<<< HEAD
         android:roundIcon="@mipmap/ic_launcher_round"
+=======
+        android:roundIcon="@mipmap/logo"
+>>>>>>> 4891649a5c6c6cc71acd6a800b2295fe1e130964
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

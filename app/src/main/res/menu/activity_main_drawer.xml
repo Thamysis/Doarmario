@@ -18,7 +18,9 @@
             android:title="@string/montar_looks" />
     </group>
 
-    <item android:title="Listagens" android:checkableBehavior="single">
+    <item
+        android:checkableBehavior="single"
+        android:title="@string/menu_listagens">
         <menu>
             <item
                 android:id="@+id/listagem_pecas"
@@ -40,7 +42,9 @@
                 android:title="@string/montagens" />
         </menu>
     </item>
-    <item android:title="" android:checkableBehavior="single">
+    <item
+        android:checkableBehavior="single"
+        android:title="">
         <menu>
             <item
                 android:id="@+id/perfil"

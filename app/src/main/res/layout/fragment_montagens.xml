@@ -65,7 +65,7 @@
             <ImageView
                 android:id="@+id/mais_1"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/ic_mais"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -109,7 +109,7 @@
             <ImageView
                 android:id="@+id/mais_2"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="50dp"
                 app:srcCompat="@drawable/ic_mais"
                 tools:ignore="VectorDrawableCompat" />
 

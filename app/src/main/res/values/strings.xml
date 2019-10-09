@@ -113,5 +113,6 @@
     <string name="exemplo_desc_vestuario">Ex. blusa preferida</string>
     <string name="txt_desc_cor">Cor: </string>
     <string name="txt_desc_categoria">Categoria: </string>
+    <string name="menu_listagens">Listagens</string>
 
 </resources>

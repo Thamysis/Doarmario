@@ -20,7 +20,7 @@
             android:id="@+id/textView_filtro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:drawableStart="@drawable/ic_filtro"
             android:drawableLeft="@drawable/ic_filtro"
             android:gravity="center"
@@ -36,7 +36,7 @@
             <ImageView
                 android:id="@+id/setaEsquerda_1"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_esquerda"
                 tools:ignore="VectorDrawableCompat" />
@@ -51,7 +51,7 @@
             <ImageView
                 android:id="@+id/setaDireita_1"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_direita"
                 tools:ignore="VectorDrawableCompat" />
@@ -79,7 +79,7 @@
             <ImageView
                 android:id="@+id/setaEsquerda_2"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_esquerda"
                 tools:ignore="VectorDrawableCompat" />
@@ -94,7 +94,7 @@
             <ImageView
                 android:id="@+id/setaDireita_2"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_direita"
                 tools:ignore="VectorDrawableCompat" />
@@ -123,7 +123,7 @@
             <ImageView
                 android:id="@+id/setaEsquerda_3"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_esquerda"
                 tools:ignore="VectorDrawableCompat" />
@@ -138,7 +138,7 @@
             <ImageView
                 android:id="@+id/setaDireita_3"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="80dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_seta_direita"
                 tools:ignore="VectorDrawableCompat" />

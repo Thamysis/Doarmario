@@ -207,12 +207,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 db.execSQL(insertMarcador("Escola"));
             }
 
-
-
-
-
-
-
             Log.i("CERTO", "Inserções realizadas com sucesso!");
         }catch (Exception e) {
             Log.i("ERRO", "excecao" + e.getMessage());

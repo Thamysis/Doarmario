@@ -308,7 +308,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 
-            Log.i("CERTO", "Inserções realizadas com sucesso!");
+                Log.i("CERTO", "Inserções realizadas com sucesso!");
         }catch (Exception e) {
             Log.i("ERRO", "excecao" + e.getMessage());
         }

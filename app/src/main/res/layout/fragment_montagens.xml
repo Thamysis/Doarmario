@@ -6,7 +6,186 @@
 
     <TextView
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:layout_width="match_parent"
         android:text="Implementar tela de listagem de montegem de peças."/>
+=======
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_filtro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableStart="@drawable/ic_filtro"
+            android:drawableLeft="@drawable/ic_filtro"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/filtrar_montagem"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/setaEsquerda_1"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_esquerda"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:id="@+id/parte_de_cima"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/peca_cropped3" />
+
+            <ImageView
+                android:id="@+id/setaDireita_1"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_direita"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mais_1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_mais"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/setaEsquerda_2"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_esquerda"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:id="@+id/parte_de_baixo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/peca_saia2" />
+
+            <ImageView
+                android:id="@+id/setaDireita_2"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_direita"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mais_2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_mais"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/setaEsquerda_3"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_esquerda"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:id="@+id/sapato"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/peca_tenis" />
+
+            <ImageView
+                android:id="@+id/setaDireita_3"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_seta_direita"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView_aleatorio"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="imagem_aleatorio"
+                    app:srcCompat="@drawable/ic_aleatorio"
+                    tools:ignore="VectorDrawableCompat" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_salvarMontagem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_botao"
+                    android:text="@string/botao_salvar"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+>>>>>>> fcbb924033c4b3c352ac05ab3c94146679dc7c0e
 
 </LinearLayout>

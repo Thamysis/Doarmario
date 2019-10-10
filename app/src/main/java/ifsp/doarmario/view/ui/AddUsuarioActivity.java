@@ -1,6 +1,7 @@
 package ifsp.doarmario.view.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +26,15 @@ public class AddUsuarioActivity extends AppCompatActivity {
     private String senha;
     private String senhaConfirm;
 
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_usuario);
+
+        //preferências
+        preferences = getSharedPreferences("usuario_detalhes", MODE_PRIVATE);
 
         //referenciar componentes da tela
         txtNome = findViewById(R.id.txtNome);
@@ -43,7 +49,7 @@ public class AddUsuarioActivity extends AppCompatActivity {
                 nome_usuario = txtNome.getText().toString();
                 boolean verificarUsuario = UsuarioDao.usuarioDao.verificarUsuario(nome_usuario);
                 if(verificarUsuario) {
-                    txtNome.setError("Erro, nome de usuário já existe!");
+                    txtNome.setError(getString(R.string.usuario_ja_existente));
                     bttAdd.setEnabled(false);
                 } else {
                     bttAdd.setEnabled(true);
@@ -57,13 +63,14 @@ public class AddUsuarioActivity extends AppCompatActivity {
                 boolean verificarEmail = UsuarioDao.usuarioDao.login(email);
 
                 if(verificarEmail) {
-                    txtEmail.setError("Erro, e-mail já cadastrado!");
+                    txtEmail.setError(getString(R.string.email_ja_existente));
                     bttAdd.setEnabled(false);
                 } else {
                     bttAdd.setEnabled(true);
                 }
             }
         });
+
     }
 
     public boolean validarSenha() {
@@ -72,7 +79,7 @@ public class AddUsuarioActivity extends AppCompatActivity {
         senhaConfirm = txtSenhaConfirm.getText().toString();
 
         if (!senha.equals(senhaConfirm)) {
-            Toast.makeText(AddUsuarioActivity.this, R.string.senhas_incompativeis, Toast.LENGTH_SHORT).show();
+            txtSenhaConfirm.setError(getString(R.string.senhas_incompativeis));
             valida = false;
         }
         return valida;
@@ -85,29 +92,30 @@ public class AddUsuarioActivity extends AppCompatActivity {
 
         //validar campos
         if(nome_usuario.isEmpty()){
-           txtNome.setError("Campo vazio!");
+            txtNome.setError(getString(R.string.campo_vazio));
             return;
         }
         if(email.isEmpty()) {
-            txtEmail.setError("Campo vazio!");
+            txtEmail.setError(getString(R.string.campo_vazio));
             return;
         }
         if(senha.isEmpty()) {
-            txtSenha.setError("Campo vazio!");
+            txtSenha.setError(getString(R.string.campo_vazio));
             return;
         }
 
         boolean valida = validarSenha();
 
         if(valida) {
-            //Toast.makeText(AddUsuarioActivity.this,senha + "\n"+ nome + email  , Toast.LENGTH_SHORT).show();
-
             Usuario usuariovo = new Usuario(nome_usuario, email, senha);
-           // UsuarioDao usuarioDAO = new UsuarioDao(getApplicationContext());
 
             boolean resposta = UsuarioDao.usuarioDao.salvar(usuariovo);
 
             if(resposta) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("nome_usuario", nome_usuario);
+                editor.commit();
+
                 Toast.makeText(AddUsuarioActivity.this, R.string.cadastro_sucesso , Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AddUsuarioActivity.this, MainActivity.class);
                 intent.putExtra("usuario", nome_usuario);

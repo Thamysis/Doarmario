@@ -18,7 +18,9 @@
             android:title="@string/montar_looks" />
     </group>
 
-    <item android:title="Listagens" android:checkableBehavior="single">
+    <item
+        android:checkableBehavior="single"
+        android:title="@string/menu_listagens">
         <menu>
             <item
                 android:id="@+id/listagem_pecas"
@@ -40,7 +42,9 @@
                 android:title="@string/montagens" />
         </menu>
     </item>
-    <item android:title="" android:checkableBehavior="single">
+    <item
+        android:checkableBehavior="single"
+        android:title="">
         <menu>
             <item
                 android:id="@+id/perfil"
@@ -51,6 +55,11 @@
                 android:id="@+id/sobre_desenvolvedoras"
                 android:icon="@drawable/menu_desenvolvedoras"
                 android:title="@string/sobre_as_desenvolvedoras" />
+
+            <item
+                android:id="@+id/sair_conta"
+                android:icon="@drawable/menu_sair"
+                android:title="@string/sair" />
         </menu>
     </item>
 </menu>

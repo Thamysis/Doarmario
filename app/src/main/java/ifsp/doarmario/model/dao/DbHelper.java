@@ -62,10 +62,11 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "descricao_vestuario TEXT NOT NULL, "
                 + "imagem_vestuario TEXT NOT NULL,"
                 + "status_doacao TEXT NOT NULL,"
-                + "id_cor INTENGER,"
-                + "id_categoria INTENGER,"
-                + "id_marcador INTENGER,"
-                + "nome_usuario TEXT NOT NULL"
+                + "id_cor INTEGER,"
+                + "id_categoria INTEGER,"
+                + "id_marcador INTEGER,"
+                + "nome_usuario TEXT NOT NULL,"
+                + "FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria)"
                 + ");";
 
         String sql_create_Marcador_Vestuario = "CREATE TABLE IF NOT EXISTS "
@@ -206,6 +207,100 @@ public class DbHelper extends SQLiteOpenHelper {
                 db.execSQL(insertMarcador("SNCT"));
                 db.execSQL(insertMarcador("Escola"));
             }
+            //categoria
+            //roupa_de_cima
+            {
+                db.execSQL(insertCategoria("Blusa ", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Camiseta", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Camisa", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Regata", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Blusa de Alcinha", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Bory", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Cropped", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Top", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Frente Única", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Suéter ", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Cardigan", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Blazer", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Jaqueta", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Casaco", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Moletom", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Coletes", "roupa_de_cima"));
+                db.execSQL(insertCategoria("Quimono", "roupa_de_cima"));
+            }
+            //roupa_de_baixo
+            {
+                db.execSQL(insertCategoria("Boca de sino", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Cigarrete", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Skinny", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Pantalona", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Flare", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Cargo", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Pantacourt", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Calça social", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Saruel", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Capri", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Jeans", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Legging", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Harem", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Moletom", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Short jeans", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Short social", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Short saia", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Bermuda", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Minissaia", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Saia Jeans", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Saia Lápis", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Saia Longa", "roupa_de_baixo"));
+                db.execSQL(insertCategoria("Midi", "roupa_de_baixo"));
+
+            }
+            //calçado
+            {
+                db.execSQL(insertCategoria("Sapatilha", "calcado"));
+                db.execSQL(insertCategoria("Sandália", "calcado"));
+                db.execSQL(insertCategoria("Rasteirinha", "calcado"));
+                db.execSQL(insertCategoria("Chinelo", "calcado"));
+                db.execSQL(insertCategoria("Meia pata", "calcado"));
+                db.execSQL(insertCategoria("Scarpin", "calcado"));
+                db.execSQL(insertCategoria("Stiletto", "calcado"));
+                db.execSQL(insertCategoria("Plataforma", "calcado"));
+                db.execSQL(insertCategoria("Anabela", "calcado"));
+                db.execSQL(insertCategoria("Tênis", "calcado"));
+                db.execSQL(insertCategoria("Chuteiras", "calcado"));
+                db.execSQL(insertCategoria("Sapatênis", "calcado"));
+                db.execSQL(insertCategoria("Mocassim", "calcado"));
+                db.execSQL(insertCategoria("Sapato", "calcado"));
+                db.execSQL(insertCategoria("Bota", "calcado"));
+
+            }
+            //peça_unica
+            {
+                db.execSQL(insertCategoria("Vestidos", "peca_unica"));
+                db.execSQL(insertCategoria("Social", "peca_unica"));
+                db.execSQL(insertCategoria("Longuete", "peca_unica"));
+                db.execSQL(insertCategoria("Macaquinho", "peca_unica"));
+                db.execSQL(insertCategoria("Macacão", "peca_unica"));
+                db.execSQL(insertCategoria("Jardineira", "peca_unica"));
+                db.execSQL(insertCategoria("Salopete", "peca_unica"));
+            }
+            //acessórios
+            {
+                db.execSQL(insertCategoria("Bolsa", "acessorio"));
+                db.execSQL(insertCategoria("Cachecol", "acessorio"));
+                db.execSQL(insertCategoria("Luva", "acessorio"));
+                db.execSQL(insertCategoria("Lenço", "acessorio"));
+                db.execSQL(insertCategoria("Meia-calça", "acessorio"));
+                db.execSQL(insertCategoria("Meia", "acessorio"));
+                db.execSQL(insertCategoria("Suspensório", "acessorio"));
+                db.execSQL(insertCategoria("Relógio", "acessorio"));
+                db.execSQL(insertCategoria("Pulseira", "acessorio"));
+                db.execSQL(insertCategoria("Brinco", "acessorio"));
+                db.execSQL(insertCategoria("Colar", "acessorio"));
+                db.execSQL(insertCategoria("Anel", "acessorio"));
+                db.execSQL(insertCategoria("Broche", "acessorio"));
+                db.execSQL(insertCategoria("Óculos", "acessorio"));
+            }
 
 
 
@@ -213,7 +308,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
 
-            Log.i("CERTO", "Inserções realizadas com sucesso!");
+                Log.i("CERTO", "Inserções realizadas com sucesso!");
         }catch (Exception e) {
             Log.i("ERRO", "excecao" + e.getMessage());
         }

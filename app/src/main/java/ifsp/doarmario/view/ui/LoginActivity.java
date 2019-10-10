@@ -1,6 +1,7 @@
 package ifsp.doarmario.view.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,19 +23,21 @@ public class LoginActivity extends AppCompatActivity {
 
     private String emailDigitado;
 
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        //inicializar variaveis estáticas usadas p/ conexão c/ banco
+        DbHelper.database = new DbHelper(getApplicationContext());
+        UsuarioDao.usuarioDao = new UsuarioDao(getApplicationContext());
+
         //referenciar componentes da tela
         txtEmail = findViewById(R.id.editEmail);
         txtSenha = findViewById(R.id.editSenha);
         txtRedefinirSenha = findViewById(R.id.txtRedefinirSenha);
-
-        //inicializar variaveis estáticas usadas p/ conexão c/ banco
-        DbHelper.database = new DbHelper(getApplicationContext());
-        UsuarioDao.usuarioDao = new UsuarioDao(getApplicationContext());
 
         //evento de ação ao clicar p/ o TextView Esqueceu a senha
         txtRedefinirSenha.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +46,18 @@ public class LoginActivity extends AppCompatActivity {
                 redefinirSenha(view);
             }
         });
+
+        //obter preferências do usuário
+        preferences = getSharedPreferences("usuario_detalhes", MODE_PRIVATE);
+
+        //se o usuário já fez o login no sistema
+        if(preferences.getString("nome_usuario", null) != null) {
+            String usuarioLogado =  preferences.getString("nome_usuario", null);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("usuario", usuarioLogado);
+            startActivity(intent);
+            finish();
+        }
     }
 
     //executado ao clicar no botão de login
@@ -51,25 +66,30 @@ public class LoginActivity extends AppCompatActivity {
         String email = txtEmail.getText().toString();
         String senha = txtSenha.getText().toString();
 
-        //KeyStore.PasswordProtection senha2 =
-
+        //verifica se e-mail está cadastrado
         verifica = UsuarioDao.usuarioDao.login(email);
 
         if(verifica){
-            String nomeUsuario = UsuarioDao.usuarioDao.verificaSenha(email,senha);
+            String nomeUsuario = UsuarioDao.usuarioDao.verificaSenha(email, senha);
 
+            //verifica se a senha é compatível
             if(nomeUsuario != null) {
-                Toast.makeText(this, "bem-vindo ao sistema" , Toast.LENGTH_SHORT).show();
+                // adiciona nome_usuario às preferências
+                // para que na próxima vez que o usuário iniciar o app
+                // não apareça o login novamente
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("nome_usuario", nomeUsuario);
+                editor.commit();
+
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("usuario", nomeUsuario);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(this, "senha errada" , Toast.LENGTH_SHORT).show();
+                txtSenha.setError(getString(R.string.senha_incorreta));
             }
         }else {
-            txtEmail.setError("Email inexistente");
-            Toast.makeText(this, R.string.usuario_nao_existe, Toast.LENGTH_SHORT).show();
+            txtEmail.setError(getString(R.string.email_inexistente));
         }
     }
 
@@ -96,22 +116,21 @@ public class LoginActivity extends AppCompatActivity {
         emailDigitado = txtRecEmail.getText().toString();
 
         //verificar se e-mail está cadastrado
-        boolean verificaEmail = false;
-        verificaEmail = UsuarioDao.usuarioDao.login(emailDigitado);
+        boolean verificaEmail = UsuarioDao.usuarioDao.login(emailDigitado);
 
         /*************************
-        //CODIGO PARA ENVIAR EMAIL
-        *************************/
+         //CODIGO PARA ENVIAR EMAIL
+         *************************/
 
         boolean envio = true;
         if(verificaEmail) {
             if(envio) {
-                Toast.makeText(LoginActivity.this, "email enviado para" + emailDigitado, Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.enviar_email_sucesso), Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(LoginActivity.this, "Erro", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, getString(R.string.enviar_email_erro), Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(LoginActivity.this, "E-mail não cadastrado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, getString(R.string.email_inexistente), Toast.LENGTH_SHORT).show();
         }
     }
 

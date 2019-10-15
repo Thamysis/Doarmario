@@ -18,7 +18,6 @@ public class CorDAO {
         helper = new DbHelper(context);
         escreve = helper.getWritableDatabase();
         le = helper.getReadableDatabase();
-        cargaInicial();
     }
 
     public boolean salvar(Cor cor) {
@@ -39,7 +38,7 @@ public class CorDAO {
         le = helper.getReadableDatabase();
         ArrayList<Cor> listaCores = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " ;";
+        String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " ORDER BY descricao_cor;";
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -58,7 +57,7 @@ public class CorDAO {
         le.close();
         return listaCores;
     }
-    public Cor detalhar ( Long id){
+    public Cor detalhar(Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " WHERE ID_COR =" + id + " ;";
         Cursor c = le.rawQuery(sql, null);
@@ -94,6 +93,7 @@ public class CorDAO {
         escreve.close();
         return true;
     }
+
     public boolean deletar(Cor cor) {
         try {
             String[] args = { cor.getId_cor().toString() };
@@ -106,9 +106,5 @@ public class CorDAO {
         escreve.close();
         return true;
 
-    }
-
-    public void cargaInicial(){
-        salvar(new Cor("Preto"));
     }
 }

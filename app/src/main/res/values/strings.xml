@@ -115,4 +115,8 @@
     <string name="txt_desc_categoria">Categoria: </string>
     <string name="menu_listagens">Listagens</string>
 
+
+    <!--filtros-->
+    <string name="filtros">Filtros </string>
+
 </resources>

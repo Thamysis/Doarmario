@@ -2,11 +2,15 @@ package ifsp.doarmario.view.ui.monta_looks;
 
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,9 +19,13 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.VestuarioDAO;
 import ifsp.doarmario.model.vo.Vestuario;
+import ifsp.doarmario.view.ui.detalhamento_pecas.DetalhamentoPecasFragment;
+import ifsp.doarmario.view.ui.filtros.FiltroFragment;
 
 public class MontaLooksFragment extends Fragment {
     private String nomeUsuarioAtual;
@@ -28,10 +36,14 @@ public class MontaLooksFragment extends Fragment {
     private List<Vestuario> listaParteDeCima = new ArrayList<>();
     private List<Vestuario> listaParteDeBaixo = new ArrayList<>();
     private List<Vestuario> listaCalcado = new ArrayList<>();
+
+
+
     private int posicao_parte_de_cima;
     private int posicao_parte_de_baixo;
     private int posicao_sapato;
-
+    //filtro
+    private TextView filtro;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +72,8 @@ public class MontaLooksFragment extends Fragment {
         posicao_parte_de_cima = 0;
         posicao_parte_de_baixo = 0;
         posicao_sapato = 0;
+        //filtro
+        filtro= view.findViewById(R.id.textView_filtro);
 
         seta_1_esquerda.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +118,26 @@ public class MontaLooksFragment extends Fragment {
                 carregaImagens();
             }
         });
+        filtro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        carregaImagens();
+               FiltroFragment filtroFragment = new FiltroFragment();
+
+                //Bundle bundle = new Bundle();
+                //bundle.putSerializable("vestuarioSelecionado", vestuarioSelecionado);
+                //detalhamentoPecasFragment.setArguments(bundle);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.nav_host_fragment, filtroFragment);
+                fragmentManager.popBackStack();
+                fragmentTransaction.commit();
+            }
+        });
+
+        //carregaImagens();
         return view;
     }
     public void carregaImagens(){
@@ -142,4 +174,11 @@ public class MontaLooksFragment extends Fragment {
         imagem_sapato.setImageBitmap(BitmapFactory.decodeFile(vestuarioCalcado.getImagem_vestuario()));
 
     }
+    /*public void filtrar()
+       {
+
+       }*/
+
+
+
 }

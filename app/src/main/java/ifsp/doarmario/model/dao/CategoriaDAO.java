@@ -18,7 +18,6 @@ public class CategoriaDAO {
         helper = new DbHelper(context);
         escreve = helper.getWritableDatabase();
         le = helper.getReadableDatabase();
-        cargaInicial();
     }
 
     public boolean salvar(Categoria categoria) {
@@ -36,15 +35,15 @@ public class CategoriaDAO {
         }
         return true;
     }
+
     public ArrayList<Categoria> listar() {
         le = helper.getReadableDatabase();
         ArrayList<Categoria> listaCategorias = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " ;";
+        String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " ORDER BY descricao_categoria;";
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
-
             Categoria categoria = new Categoria();
 
             Long id_categoria = c.getLong( c.getColumnIndex("id_categoria") );
@@ -56,13 +55,28 @@ public class CategoriaDAO {
             categoria.setTipo_categoria(tipo_categoria);
 
             listaCategorias.add( categoria );
-            Log.i("INFO", categoria.getDescricao_categoria()  );
         }
         le.close();
         return listaCategorias;
     }
-    public boolean atualizar(Categoria categoria) {
 
+    public ArrayList<String> listarTipoCategoria() {
+        le = helper.getReadableDatabase();
+        ArrayList<String> listaTipoCategoria = new ArrayList<>();
+
+        String sql = "SELECT tipo_categoria FROM " + DbHelper.TABELA_CATEGORIA + " GROUP BY tipo_categoria ORDER BY tipo_categoria;";
+        Cursor c = le.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+            String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
+
+            listaTipoCategoria.add( tipo_categoria );
+        }
+        le.close();
+        return listaTipoCategoria;
+    }
+
+    public boolean atualizar(Categoria categoria) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_categoria", categoria.getDescricao_categoria() );
         cv.put("tipo_categoria", categoria.getTipo_categoria() );
@@ -77,6 +91,7 @@ public class CategoriaDAO {
         escreve.close();
         return true;
     }
+
     public boolean deletar(Categoria categoria) {
         try {
             String[] args = { categoria.getId_categoria().toString() };
@@ -110,9 +125,5 @@ public class CategoriaDAO {
         }
         le.close();
         return null;
-    }
-
-    public void cargaInicial(){
-        salvar(new Categoria("parte_baixo", "Saia"));
     }
 }

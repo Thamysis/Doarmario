@@ -35,6 +35,7 @@ public class CategoriaDAO {
         }
         return true;
     }
+
     public ArrayList<Categoria> listar() {
         le = helper.getReadableDatabase();
         ArrayList<Categoria> listaCategorias = new ArrayList<>();
@@ -58,8 +59,24 @@ public class CategoriaDAO {
         le.close();
         return listaCategorias;
     }
-    public boolean atualizar(Categoria categoria) {
 
+    public ArrayList<String> listarTipoCategoria() {
+        le = helper.getReadableDatabase();
+        ArrayList<String> listaTipoCategoria = new ArrayList<>();
+
+        String sql = "SELECT tipo_categoria FROM " + DbHelper.TABELA_CATEGORIA + " GROUP BY tipo_categoria ORDER BY tipo_categoria;";
+        Cursor c = le.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+            String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
+
+            listaTipoCategoria.add( tipo_categoria );
+        }
+        le.close();
+        return listaTipoCategoria;
+    }
+
+    public boolean atualizar(Categoria categoria) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_categoria", categoria.getDescricao_categoria() );
         cv.put("tipo_categoria", categoria.getTipo_categoria() );
@@ -74,6 +91,7 @@ public class CategoriaDAO {
         escreve.close();
         return true;
     }
+
     public boolean deletar(Categoria categoria) {
         try {
             String[] args = { categoria.getId_categoria().toString() };
@@ -123,5 +141,8 @@ public class CategoriaDAO {
         le.close();
         return null;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d1a6c93abaad85441e0290c3d412e4659c110349
 }

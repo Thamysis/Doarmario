@@ -57,7 +57,7 @@ public class CorDAO {
         le.close();
         return listaCores;
     }
-    public Cor detalhar ( Long id){
+    public Cor detalhar(Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " WHERE ID_COR =" + id + " ;";
         Cursor c = le.rawQuery(sql, null);
@@ -93,6 +93,7 @@ public class CorDAO {
         escreve.close();
         return true;
     }
+
     public boolean deletar(Cor cor) {
         try {
             String[] args = { cor.getId_cor().toString() };
@@ -106,5 +107,8 @@ public class CorDAO {
         return true;
 
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> d1a6c93abaad85441e0290c3d412e4659c110349
 }

@@ -37,6 +37,7 @@ public class MarcadorDAO {
         escreve.close();
         return true;
     }
+
     public ArrayList<Marcador> listar() {
         le = helper.getReadableDatabase();
         ArrayList<Marcador> listaMarcadores = new ArrayList<>();
@@ -58,8 +59,8 @@ public class MarcadorDAO {
         le.close();
         return listaMarcadores;
     }
-    public boolean atualizar(Marcador marcador) {
 
+    public boolean atualizar(Marcador marcador) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_marcador", marcador.getDescricao_marcador() );
 
@@ -74,6 +75,7 @@ public class MarcadorDAO {
         escreve.close();
         return true;
     }
+
     public boolean deletar(Marcador marcador) {
         try {
             String[] args = { marcador.getId_marcador().toString() };
@@ -88,7 +90,7 @@ public class MarcadorDAO {
 
     }
 
-    public Marcador detalhar ( Long id){
+    public Marcador detalhar (Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_MARCADOR + " WHERE ID_MARCADOR =" + id + " ;";
         Cursor c = le.rawQuery(sql, null);
@@ -108,6 +110,7 @@ public class MarcadorDAO {
         le.close();
         return null;
     }
+<<<<<<< HEAD
 
     public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
         List<Marcador> listaMarcadores = new ArrayList<>();
@@ -133,4 +136,6 @@ public class MarcadorDAO {
         le.close();
         return listaMarcadores;
     }
+=======
+>>>>>>> d1a6c93abaad85441e0290c3d412e4659c110349
 }

@@ -5,10 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ifsp.doarmario.model.vo.Marcador;
+import ifsp.doarmario.model.vo.Vestuario;
 
 public class MarcadorDAO {
     private SQLiteDatabase escreve;
@@ -106,5 +109,30 @@ public class MarcadorDAO {
         }
         le.close();
         return null;
+    }
+
+    public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
+        List<Marcador> listaMarcadores = new ArrayList<>();
+        String sql = "SELECT * FROM " + " marcador "
+                + " INNER JOIN marcador_vestuario on marcador_vestuario.id_marcador = marcador.id_marcador "
+                + " WHERE marcador_vestuario.id_vestuario =  " + idVestuario
+                + ";";
+        Log.i("INFO", sql);
+        Cursor c = le.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            Marcador marcador = new Marcador();
+
+            Long id_marcador = c.getLong(c.getColumnIndex("id_marcador"));
+            String descricao_marcador = c.getString(c.getColumnIndex("descricao_marcador"));
+
+            marcador.setId_marcador(id_marcador);
+            marcador.setDescricao_marcador(descricao_marcador);
+
+            listaMarcadores.add(marcador);
+            Log.i("INFO", marcador.getDescricao_marcador());
+        }
+        le.close();
+        return listaMarcadores;
     }
 }

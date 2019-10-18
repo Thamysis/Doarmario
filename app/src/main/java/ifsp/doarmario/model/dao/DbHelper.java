@@ -70,7 +70,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "status_doacao TEXT NOT NULL,"
                 + "id_cor INTEGER,"
                 + "id_categoria INTEGER,"
-                + "id_marcador INTEGER,"
                 + "nome_usuario TEXT NOT NULL,"
                 + "FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria)"
                 + ");";

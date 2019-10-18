@@ -70,7 +70,7 @@ public class CategoriaDAO {
         while ( c.moveToNext() ){
             String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
 
-            listaTipoCategoria.add( tipo_categoria );
+            listaTipoCategoria.add(tipo_categoria);
         }
         le.close();
         return listaTipoCategoria;
@@ -105,7 +105,6 @@ public class CategoriaDAO {
         return true;
 
     }
-
     public Categoria detalhar ( Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " WHERE ID_CATEGORIA =" + id + " ;";

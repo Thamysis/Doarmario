@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Esse app foi desenvolvido com o intuito de te auxiliar na montagem de peças, otimizar o seu tempo e incentivaro consumo cosciente" />
+            android:text="Esse app foi desenvolvido com o intuito de te auxiliar na montagem de peças, otimizar o seu tempo e incentivar o consumo consciente" />
 
         <TextView
             android:id="@+id/textView7"

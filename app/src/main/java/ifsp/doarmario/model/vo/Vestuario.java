@@ -19,13 +19,12 @@ public class Vestuario implements Serializable {
         this.imagem_vestuario = imagem_vestuario;
         this.status_doacao = status_doacao;
     }
-    public Vestuario( String descricao_vestuario, String imagem_vestuario, String status_doacao, Long id_cor, Long id_categoria, Long id_marcador, String nome_usuario ) {
+    public Vestuario( String descricao_vestuario, String imagem_vestuario, String status_doacao, Long id_cor, Long id_categoria,  String nome_usuario ) {
         this.descricao_vestuario = descricao_vestuario;
         this.imagem_vestuario = imagem_vestuario;
         this.status_doacao = status_doacao;
         this.id_cor = id_cor;
         this.id_categoria = id_categoria;
-        this.id_marcador = id_marcador;
         this.nome_usuario = nome_usuario;
     }
 

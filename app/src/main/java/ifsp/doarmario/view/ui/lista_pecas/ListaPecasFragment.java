@@ -63,19 +63,13 @@ public class ListaPecasFragment extends Fragment {
                                 bundle.putSerializable("vestuarioSelecionado", vestuarioSelecionado);
                                 detalhamentoPecasFragment.setArguments(bundle);
 
-                                // getActivity().getSupportFragmentManager().beginTransaction()
-                                 //s       .replace(R.id.nav_host_fragment, detalhamentoPecasFragment).commit();
-
                                 FragmentManager fragmentManager = getFragmentManager();
                                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                                //Fragment childFragment = fragmentManager.findFragmentByTag("qa_fragment");
                                 fragmentTransaction.replace(R.id.nav_host_fragment, detalhamentoPecasFragment);
-                                //fragmentTransaction.remove(fragmentManager.getFragment(savedInstanceState, ""));
                                 fragmentManager.popBackStack();
                                 fragmentTransaction.commit();
 
-                                //onDestroyView();
                             }
 
                             @Override

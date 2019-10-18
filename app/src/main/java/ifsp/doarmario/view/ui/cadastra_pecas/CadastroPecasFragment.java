@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,11 +39,15 @@ import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.CategoriaDAO;
 import ifsp.doarmario.model.dao.CorDAO;
 import ifsp.doarmario.model.dao.MarcadorDAO;
+import ifsp.doarmario.model.dao.Marcador_VestuarioDAO;
 import ifsp.doarmario.model.dao.VestuarioDAO;
 import ifsp.doarmario.model.vo.Categoria;
 import ifsp.doarmario.model.vo.Cor;
 import ifsp.doarmario.model.vo.Marcador;
+import ifsp.doarmario.model.vo.Marcador_Vestuario;
 import ifsp.doarmario.model.vo.Vestuario;
+import ifsp.doarmario.view.ui.MainActivity;
+import ifsp.doarmario.view.ui.pagina_inicial.PaginaInicialFragment;
 
 public class CadastroPecasFragment extends Fragment {
     private ImageButton btt_imagem_vestuario;
@@ -57,6 +64,7 @@ public class CadastroPecasFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 3;
     static String mCurrentPhotoPath;
     private String nomeUsuarioAtual;
+    private VestuarioDAO vestuarioDAO;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,7 +73,8 @@ public class CadastroPecasFragment extends Fragment {
         //recuperar nome do usuário atual
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
 
-        final VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+       ((MainActivity) getActivity()).setToolbarTitle("Cadastrar peças");
+        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
         btt_imagem_vestuario = view.findViewById(R.id.btt_seleciona_img_vestuario);
         edit_descricao_vestuario = view.findViewById(R.id.descricao_vestuario);
         btt_adicionar = view.findViewById(R.id.bttAdicionar);
@@ -78,6 +87,7 @@ public class CadastroPecasFragment extends Fragment {
         CorDAO corDAO = new CorDAO(getActivity());
         CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
         MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
+        final Marcador_VestuarioDAO marcador_vestuarioDAO = new Marcador_VestuarioDAO(getActivity());
 
         ArrayList<Cor> corLista = corDAO.listar();
         ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
@@ -138,15 +148,27 @@ public class CadastroPecasFragment extends Fragment {
 
                 if ((!descricao_vestuario.isEmpty()) && (url_imagem != null) ) {
                     Vestuario vestuario = new Vestuario(descricao_vestuario,url_imagem, status_vestuario,
-                            cor.getId_cor(), categoria.getId_categoria(), marcador.getId_marcador(), nomeUsuarioAtual);
+                            cor.getId_cor(), categoria.getId_categoria(), nomeUsuarioAtual);
+
                     if (vestuarioDAO.salvar(vestuario)) {
+                        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+                        Long marcador_id_vestuario = vestuarioDAO.idUtlimoVestuario(nomeUsuarioAtual);
+
+                        Marcador_Vestuario marcador_vestuario = new Marcador_Vestuario(
+                                marcador.getId_marcador(), marcador_id_vestuario);
+
                         //nota: fechar fragmento e voltar pra págiina inicial
+                        if(marcador_vestuarioDAO.salvar(marcador_vestuario)){
 
-                        Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!",
-                                Toast.LENGTH_SHORT).show();
-                        //CadastroPecasFragment.this.onStop();//nota: o que isso faz?
-                        onDestroyView();
+                            Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!",
+                                    Toast.LENGTH_SHORT).show();
 
+                            PaginaInicialFragment paginaInicialFragment = new PaginaInicialFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
+                            fragmentTransaction.commit();
+                        }
                     }
                     else {
                         Toast.makeText(getActivity().getApplicationContext(), "Erro ao salvar Vestuário!", Toast.LENGTH_SHORT).show();
@@ -197,7 +219,9 @@ public class CadastroPecasFragment extends Fragment {
             File photoFile = null;
             try {
                 File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-                photoFile = File.createTempFile("PHOTOAPP", ".jpg", storageDir);
+                //File storageDir = new File(Environment.DIRECTORY_PICTURES + "/Doarmario");
+
+                photoFile = File.createTempFile("Doarmario_", ".jpg", storageDir );
                 mCurrentPhotoPath = "file:" + photoFile.getAbsolutePath();
                 url_imagem = photoFile.getAbsolutePath();
             }
@@ -207,7 +231,7 @@ public class CadastroPecasFragment extends Fragment {
             }
 
             if (photoFile != null) {
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getActivity(), "camera.fileprovider", photoFile));
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(getActivity(), "camera.fileprovider",  photoFile));
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }

@@ -18,7 +18,6 @@ public class CorDAO {
         helper = new DbHelper(context);
         escreve = helper.getWritableDatabase();
         le = helper.getReadableDatabase();
-        cargaInicial();
     }
 
     public boolean salvar(Cor cor) {
@@ -39,7 +38,7 @@ public class CorDAO {
         le = helper.getReadableDatabase();
         ArrayList<Cor> listaCores = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " ;";
+        String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " ORDER BY descricao_cor;";
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -108,7 +107,4 @@ public class CorDAO {
 
     }
 
-    public void cargaInicial(){
-        salvar(new Cor("Preto"));
-    }
 }

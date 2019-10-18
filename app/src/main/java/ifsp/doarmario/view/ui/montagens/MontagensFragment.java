@@ -15,7 +15,7 @@ public class MontagensFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_montagens, container, false);
+        View view = inflater.inflate(R.layout.fragment_montagens,  container, false);
 
         //recuperar nome do usuário atual
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");

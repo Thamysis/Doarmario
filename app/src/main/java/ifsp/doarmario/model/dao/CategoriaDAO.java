@@ -18,7 +18,6 @@ public class CategoriaDAO {
         helper = new DbHelper(context);
         escreve = helper.getWritableDatabase();
         le = helper.getReadableDatabase();
-        cargaInicial();
     }
 
     public boolean salvar(Categoria categoria) {
@@ -40,11 +39,10 @@ public class CategoriaDAO {
         le = helper.getReadableDatabase();
         ArrayList<Categoria> listaCategorias = new ArrayList<>();
 
-        String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " ;";
+        String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " ORDER BY descricao_categoria;";
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
-
             Categoria categoria = new Categoria();
 
             Long id_categoria = c.getLong( c.getColumnIndex("id_categoria") );
@@ -56,7 +54,6 @@ public class CategoriaDAO {
             categoria.setTipo_categoria(tipo_categoria);
 
             listaCategorias.add( categoria );
-            Log.i("INFO", categoria.getDescricao_categoria()  );
         }
         le.close();
         return listaCategorias;
@@ -90,6 +87,21 @@ public class CategoriaDAO {
         return true;
 
     }
+    public ArrayList<String> listarTipoCategoria() {
+        le = helper.getReadableDatabase();
+        ArrayList<String> listaTipoCategoria = new ArrayList<>();
+
+        String sql = "SELECT tipo_categoria FROM " + DbHelper.TABELA_CATEGORIA + " GROUP BY tipo_categoria ORDER BY tipo_categoria;";
+        Cursor c = le.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+            String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
+
+            listaTipoCategoria.add( tipo_categoria );
+        }
+        le.close();
+        return listaTipoCategoria;
+    }
 
     public Categoria detalhar ( Long id){
         le = helper.getReadableDatabase();
@@ -112,7 +124,4 @@ public class CategoriaDAO {
         return null;
     }
 
-    public void cargaInicial(){
-        salvar(new Categoria("parte_baixo", "Saia"));
-    }
 }

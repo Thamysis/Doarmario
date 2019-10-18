@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private String nomeUsuarioAtual;
     private TextView txtNomeUsuario;
     private TextView txtEmail;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, nomeUsuarioAtual, Toast.LENGTH_LONG);
 
         //configurando toolbar e menu
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, getString(R.string.bem_vindo) + nomeUsuarioAtual , Toast.LENGTH_SHORT).show();
 
+
     }
 
     public void alerta(){
@@ -87,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 ListaPecasNaoUtilizadasFragment naoUtilizadasFragment = new ListaPecasNaoUtilizadasFragment();
                 //nota: abrir fragmento nao_utilizados aqui
-
             }
         });
         dialog.create();
@@ -106,4 +107,8 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+    public void  setToolbarTitle(String title){
+        toolbar.setTitle(title);
+    }
+
 }

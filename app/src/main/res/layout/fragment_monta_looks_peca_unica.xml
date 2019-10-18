@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/branco" />
+                android:src="@drawable/peca_cropped3" />
 
             <ImageView
                 android:id="@+id/setaDireita_1"
@@ -89,7 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/branco" />
+                android:src="@drawable/peca_saia2" />
 
             <ImageView
                 android:id="@+id/setaDireita_2"
@@ -133,7 +133,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/branco" />
+                android:src="@drawable/peca_tenis" />
 
             <ImageView
                 android:id="@+id/setaDireita_3"

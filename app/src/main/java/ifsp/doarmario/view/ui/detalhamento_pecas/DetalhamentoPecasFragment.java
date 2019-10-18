@@ -16,74 +16,99 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
+import java.util.List;
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.CategoriaDAO;
 import ifsp.doarmario.model.dao.CorDAO;
 import ifsp.doarmario.model.dao.MarcadorDAO;
+import ifsp.doarmario.model.dao.Marcador_VestuarioDAO;
 import ifsp.doarmario.model.dao.VestuarioDAO;
 import ifsp.doarmario.model.vo.Categoria;
 import ifsp.doarmario.model.vo.Cor;
 import ifsp.doarmario.model.vo.Marcador;
+import ifsp.doarmario.model.vo.Marcador_Vestuario;
 import ifsp.doarmario.model.vo.Vestuario;
+import ifsp.doarmario.view.ui.MainActivity;
 
 public class DetalhamentoPecasFragment extends Fragment {
-    private EditText edit_descricao_vestuario, edit_cor_vestuario, edit_categoria_vestuario, edit_marcador_vestuario;
+    private EditText edit_descricao_vestuario, edit_cor_vestuario, edit_categoria_vestuario;
     private Button btt_alterar;
     private ImageButton btt_edit_marcador, btt_edit_cor, btt_edit_categoria;
     private ImageView imagem_vestuario;
     private Vestuario vestuarioAtual;
     private AlertDialog pickerCor, pickerCategoria, pickerMarcador;
     private Long id_categoria_alterada, id_cor_alterada, id_marcador_alterado ;
-
+    private String nomeUsuarioAtual;
+    private EditText edit_marcador_vestuario;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_detalhamento_pecas, container, false);
-
+        ((MainActivity) getActivity()).setToolbarTitle("Detalhar peças");
         final VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
 
-        //recupera o vestuário
+        nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
         Bundle bundle = getArguments();
         vestuarioAtual = (Vestuario) bundle.getSerializable("vestuarioSelecionado");
-
         edit_descricao_vestuario = view.findViewById(R.id.edit_descricao_vestuario);
         edit_cor_vestuario = view.findViewById(R.id.edit_cor_vestuario);
         edit_categoria_vestuario = view.findViewById(R.id.edit_categoria_vestuario);
+        //COMECA MUDANÇA
         edit_marcador_vestuario = view.findViewById(R.id.edit_marcador_vestuario);
-
+        //FIM MUDANÇA
         btt_alterar = (Button) view.findViewById(R.id.bttAlterar);
-
         btt_edit_marcador = (ImageButton) view.findViewById(R.id.btt_edit_marcador);
         btt_edit_categoria = (ImageButton) view.findViewById(R.id.btt_edit_categoria);
         btt_edit_cor = (ImageButton) view.findViewById(R.id.btt_edit_cor);
-
         imagem_vestuario = (ImageView) view.findViewById(R.id.img_vestuario);
-
         if(vestuarioAtual.getImagem_vestuario() != null){
             imagem_vestuario.setImageBitmap(BitmapFactory.decodeFile(vestuarioAtual.getImagem_vestuario()));
         }
         edit_descricao_vestuario.setText( vestuarioAtual.getDescricao_vestuario() );
-
-        //nota: implementar ação de clique em editDescricao
-         edit_descricao_vestuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "clicou", Toast.LENGTH_SHORT);
-                edit_categoria_vestuario.setEnabled(true);
-            }
-        });
-
+        //COMECA MUDANÇA
+        //edit_descricao_vestuario.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+        //        Toast.makeText(getContext(), "clicou", Toast.LENGTH_SHORT).show();
+        //        edit_categoria_vestuario.setEnabled(true);
+        //    }
+        //});
+        //FIM MUDANÇA
         CorDAO corDAO = new CorDAO(getActivity());
         CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
+        //COMECA MUDANÇA
         MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
+        Marcador_VestuarioDAO marcador_vestuarioDAO = new Marcador_VestuarioDAO(getActivity());
+        //FIM MUDANÇA
 
         Cor corVestuario = corDAO.detalhar(vestuarioAtual.getId_cor());
         Categoria categoriaVestuario = categoriaDAO.detalhar(vestuarioAtual.getId_categoria());
-        Marcador marcadorVestuario = marcadorDAO.detalhar(vestuarioAtual.getId_marcador());
 
+        //marcadores
+        List<Marcador_Vestuario> listaMarcadorVestuario = marcador_vestuarioDAO.listarMarcadores(vestuarioAtual.getId_vestuario());
+        List<Marcador> listaTodosMarcadores = marcadorDAO.listar();
+        List<Marcador> listaMarcadores = new ArrayList<>();
+
+        for (Marcador_Vestuario marcadore_vestuario: listaMarcadorVestuario){
+             for(Marcador marcador:listaTodosMarcadores){
+                 if((marcador.getId_marcador()).equals(marcadore_vestuario.getId_marcador())){
+                     listaMarcadores.add(marcador);
+
+                 }
+             }
+
+        }
+
+        String concatenado = "";
+
+        for (Marcador marcador: listaMarcadores
+             )
+            concatenado = concatenado + marcador.getDescricao_marcador() + ", ";
+
+        //marcadorVestuario =
         edit_categoria_vestuario.setText(categoriaVestuario.getDescricao_categoria());
         edit_cor_vestuario.setText(corVestuario.getDescricao_cor());
-        edit_marcador_vestuario.setText(marcadorVestuario.getDescricao_marcador());
+        edit_marcador_vestuario.setText(concatenado + " u ");
 
         edit_cor_vestuario.setEnabled(false);
         edit_categoria_vestuario.setEnabled(false);
@@ -92,12 +117,15 @@ public class DetalhamentoPecasFragment extends Fragment {
         final ArrayList<Cor> corLista = corDAO.listar();
         final ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
         final ArrayList<Marcador> marcadorLista = marcadorDAO.listar();
+
         final ArrayAdapter<Cor> adapterCor = new ArrayAdapter<Cor>(getActivity(),R.layout.item_picker, corLista);
         final ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<Categoria>(getActivity(),R.layout.item_picker, categoriaLista);
         final ArrayAdapter<Marcador> adapterMarcador = new ArrayAdapter<Marcador>(getActivity(),R.layout.item_picker, marcadorLista);
+
         final AlertDialog.Builder builderCor = new AlertDialog.Builder(getActivity());
         final AlertDialog.Builder builderCategoria = new AlertDialog.Builder(getActivity());
         final AlertDialog.Builder builderMarcador = new AlertDialog.Builder(getActivity());
+
         builderCor.setTitle("Selecione a cor para alterar.");
         builderCategoria.setTitle("Selecione a categoria para alterar.");
         builderMarcador.setTitle("Selecione o marcador para alterar.");
@@ -136,22 +164,6 @@ public class DetalhamentoPecasFragment extends Fragment {
                 });
                 pickerCor = builderCor.create();
                 pickerCor.show();
-            }
-        });
-        btt_edit_marcador.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                builderMarcador.setSingleChoiceItems(adapterMarcador, 0, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int arg1) {
-                        edit_marcador_vestuario.setEnabled(true);
-                        edit_marcador_vestuario.setText(marcadorLista.get(arg1).getDescricao_marcador());
-                        edit_marcador_vestuario.setEnabled(false);
-                        id_marcador_alterado = marcadorLista.get(arg1).getId_marcador();
-                        pickerMarcador.dismiss();
-                    }
-                });
-                pickerMarcador = builderMarcador.create();
-                pickerMarcador.show();
             }
         });
 

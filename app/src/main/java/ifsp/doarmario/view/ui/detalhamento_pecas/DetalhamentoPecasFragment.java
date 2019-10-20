@@ -93,7 +93,6 @@ public class DetalhamentoPecasFragment extends Fragment {
              for(Marcador marcador:listaTodosMarcadores){
                  if((marcador.getId_marcador()).equals(marcadore_vestuario.getId_marcador())){
                      listaMarcadores.add(marcador);
-
                  }
              }
 
@@ -101,8 +100,8 @@ public class DetalhamentoPecasFragment extends Fragment {
 
         String concatenado = "";
 
-        for (Marcador marcador: listaMarcadores
-             )
+        for (Marcador marcador: listaMarcadores)
+          
             concatenado = concatenado + marcador.getDescricao_marcador() + ", ";
 
         //marcadorVestuario =

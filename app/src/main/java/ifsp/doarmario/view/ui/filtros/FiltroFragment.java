@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
@@ -14,30 +15,25 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.CategoriaDAO;
+import ifsp.doarmario.model.dao.CorDAO;
 import ifsp.doarmario.model.dao.MarcadorDAO;
 import ifsp.doarmario.model.vo.Categoria;
 import ifsp.doarmario.model.vo.Cor;
 import ifsp.doarmario.model.vo.Marcador;
 import ifsp.doarmario.view.adapter.filtros.ThreeLevelListAdapter;
+import ifsp.doarmario.view.ui.monta_looks.MontaLooksFragment;
 
 public class FiltroFragment extends Fragment {
     private ExpandableListView expandableListView;
 
     String[] parent = new String[]{"Cor", "Categoria", "Marcadores"};
-    String[] q1 = new String[]{"List View", "Grid View"};
-    String[] q2 = new String[]{"Linear Layout", "Relative Layout"};
-    String[] q3 = new String[]{"Recycle View"};
-    String[] des1 = new String[]{"l layout that organizes its children into a single horizontal or vertical row. It creates a scrollbar if the length of the window exceeds the length of the screen."};
-    String[] des2 = new String[]{"Enables you to specify the location of child objects relative to each other (child A to the left of child B) or to the parent (aligned to the top of the parent)."};
-    String[] des3 = new String[]{"This list contains linear layout information"};
-    String[] des4 = new String[]{"This list contains relative layout information,Displays a scrolling grid of columns and rows"};
-    String[] des5 = new String[]{"Under the RecyclerView model, several different components work together to display your data. Some of these components can be used in their unmodified form; for example, your app is likely to use the RecyclerView class directly. In other cases, we provide an abstract class, and your app is expected to extend it; for example, every app that uses RecyclerView needs to define its own view holder, which it does by extending the abstract RecyclerView.ViewHolder class."};
 
-    LinkedHashMap<String, String[]> thirdLevelq1 = new LinkedHashMap<>();
-    LinkedHashMap<String, String[]> thirdLevelq2 = new LinkedHashMap<>();
-    LinkedHashMap<String, String[]> thirdLevelq3 = new LinkedHashMap<>();
+    LinkedHashMap<String, String[]> terceiroNivelCategoria = new LinkedHashMap<>();
 
     HashMap<String, ArrayList<String>> categorias = new HashMap<>();
 
@@ -50,33 +46,69 @@ public class FiltroFragment extends Fragment {
     List<LinkedHashMap<String, String[]>> data = new ArrayList<>();
     View view;
 
+    private Button btn;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.filtro, container, false);
+
+        //botão
+        super.onCreate(savedInstanceState);
+
+        btn = view.findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MontaLooksFragment montaLooksFragment = new MontaLooksFragment ();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.nav_host_fragment, montaLooksFragment);
+                fragmentManager.popBackStack();
+                fragmentTransaction.commit();
+            }
+        });
+
+        //referencia pra expandableListView no filtros.xml
+        expandableListView = (ExpandableListView) view.findViewById(R.id.expandible_listview);
+
         setUpAdapter();
+        //setupReferences();
+
         return view;
     }
 
     private void setUpAdapter() {
         //obter lista do banco
-        //CorDAO corDAO = new CorDAO(getActivity());
+        CorDAO corDAO = new CorDAO(getActivity());
         CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
         MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
 
-        //corLista = corDAO.listar();
+        corLista = corDAO.listar();
         ArrayList<String> categoriaTipoListaArray = categoriaDAO.listarTipoCategoria();
+        categoriaLista = categoriaDAO.listar();
+        marcadorLista = marcadorDAO.listar();
+
+        //setando as informações da lista de cores
+        //para um array somente com a descrição de cada cor
+        String[] descricaoCores = new String[corLista.size()];
+        for(int i=0; i < corLista.size(); i++){
+            descricaoCores[i] = corLista.get(i).getDescricao_cor();
+        }
+
+        //setando as informações da lista de marcadores
+        //para um array somente com a descrição de cada marcador
+        String[] descricaoMarcadores = new String[marcadorLista.size()];
+        for(int j = 0; j < marcadorLista.size(); j++) {
+            descricaoMarcadores[j] = marcadorLista.get(j).getDescricao_marcador();
+        }
+
+        //obtendo categorias que tem um mesmo tipo_categoria
         categoriaTipoLista = new String[categoriaTipoListaArray.size()];
         for(int i = 0; i < categoriaTipoListaArray.size(); i++) {
             categoriaTipoLista[i] = categoriaTipoListaArray.get(i).replace("_", " ");
         }
-        categoriaLista = categoriaDAO.listar();
-        marcadorLista = marcadorDAO.listar();
 
-        String[] categoriaMarcador = new String[marcadorLista.size()];
-        for(int j = 0; j < marcadorLista.size(); j++) {
-            categoriaMarcador[j] = marcadorLista.get(j).getDescricao_marcador();
-        }
-
-        //adiciona os itens de cada tipo_categoria
+        //adiciona em uma lista
+        //os itens(categoria) de cada tipo_categoria
         for(String tipo_categoria: categoriaTipoLista) {
             ArrayList<String> itens = new ArrayList<>();
             for(Categoria categoria: categoriaLista) {
@@ -84,30 +116,28 @@ public class FiltroFragment extends Fragment {
                     itens.add(categoria.getDescricao_categoria());
                 }
             }
+
             categorias.put(tipo_categoria, itens);
         }
 
+        secondLevel.add(descricaoCores);
+        secondLevel.add(categoriaTipoLista);
+        secondLevel.add(descricaoMarcadores);
+
+        //seta os itens(categoria) de cada tipo_categoria no layout
         for(String tipo_categoria: categoriaTipoLista) {
             int tamanho = categorias.get(tipo_categoria).size();
             String[] itens = new String[tamanho];
             for (int i = 0; i < tamanho; i++){
                 itens[i] = categorias.get(tipo_categoria).get(i);
             }
-            thirdLevelq2.put(tipo_categoria, itens);
+            terceiroNivelCategoria.put(tipo_categoria, itens);
         }
 
-        secondLevel.add(q1);
-        secondLevel.add(categoriaTipoLista);
-        secondLevel.add(categoriaMarcador);
-        thirdLevelq1.put(q1[0], des1);
-        thirdLevelq1.put(q1[1], des2);
-
-        data.add(thirdLevelq1);
-        data.add(thirdLevelq2);
-        data.add(thirdLevelq3);
-
-        //referencia pra expandableListView no filtros.xml
-        expandableListView = (ExpandableListView) view.findViewById(R.id.expandible_listview);
+        LinkedHashMap<String, String[]> thirdLevelEmpty = new LinkedHashMap<>();
+        data.add(thirdLevelEmpty);
+        data.add(terceiroNivelCategoria);
+        data.add(thirdLevelEmpty);
 
         //passing three level of information to constructor
         ThreeLevelListAdapter threeLevelListAdapterAdapter = new ThreeLevelListAdapter(getContext(), parent, secondLevel, data);

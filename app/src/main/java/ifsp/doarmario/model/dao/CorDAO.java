@@ -42,7 +42,6 @@ public class CorDAO {
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
-
             Cor cor = new Cor();
 
             Long id_cor = c.getLong( c.getColumnIndex("id_cor") );
@@ -52,11 +51,11 @@ public class CorDAO {
             cor.setDescricao_cor( descricao_cor);
 
             listaCores.add( cor );
-            Log.i("INFO", cor.getDescricao_cor() );
         }
         le.close();
         return listaCores;
     }
+
     public Cor detalhar(Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_COR + " WHERE ID_COR =" + id + " ;";

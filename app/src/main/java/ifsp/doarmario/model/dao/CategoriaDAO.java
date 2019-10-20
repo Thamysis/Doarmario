@@ -70,7 +70,7 @@ public class CategoriaDAO {
         while ( c.moveToNext() ){
             String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
 
-            listaTipoCategoria.add( tipo_categoria );
+            listaTipoCategoria.add(tipo_categoria);
         }
         le.close();
         return listaTipoCategoria;
@@ -120,7 +120,6 @@ public class CategoriaDAO {
         le.close();
         return listaTipoCategoria;
     }
-
     public Categoria detalhar ( Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " WHERE ID_CATEGORIA =" + id + " ;";
@@ -141,8 +140,4 @@ public class CategoriaDAO {
         le.close();
         return null;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> d1a6c93abaad85441e0290c3d412e4659c110349
 }

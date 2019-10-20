@@ -45,13 +45,26 @@ public class VestuarioDAO {
         escreve.close();
         return true;
     }
+
+    public Long idUtlimoVestuario(String usuario) {
+        Long id_vestuario = null;
+
+        String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO + " WHERE nome_usuario = '" + usuario + "';";
+
+        Cursor c = le.rawQuery(sql, null);
+
+        c.moveToLast();
+        id_vestuario = c.getLong( c.getColumnIndex("id_vestuario") );
+
+        le.close();
+        return id_vestuario;
+    }
+
     public boolean atualizar(Vestuario vestuario) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_vestuario", vestuario.getDescricao_vestuario() );
         cv.put("id_cor", vestuario.getId_cor());
         cv.put("id_categoria",vestuario.getId_categoria());
-
-
         try {
             String[] args = {vestuario.getId_vestuario().toString()};
             escreve.update(DbHelper.TABELA_VESTUARIO, cv, "id_vestuario=?", args );
@@ -64,7 +77,6 @@ public class VestuarioDAO {
         return true;
     }
     public boolean atualizarDoada(Vestuario vestuario) {
-
         ContentValues cv = new ContentValues();
         cv.put("status_doacao", vestuario.getStatus_doacao());
 
@@ -96,7 +108,6 @@ public class VestuarioDAO {
         List<Vestuario> listaVestuarios = new ArrayList<>();
         String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO + " WHERE nome_usuario = '" + usuario + "';";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -116,9 +127,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -133,7 +142,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'roupa_de_cima'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -155,9 +163,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -172,7 +178,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'roupa_de_baixo'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -194,9 +199,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -210,7 +213,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'calcado'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -232,13 +234,48 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
     }
+
+    public List<Vestuario> listarPecaUnica(String usuario) {
+        le = helper.getReadableDatabase();
+        List<Vestuario> listaVestuarios = new ArrayList<>();
+        String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO
+                + " INNER JOIN Categoria on Vestuario.id_categoria = Categoria.id_categoria "
+                + " WHERE nome_usuario = '" + usuario + "'"
+                + " AND tipo_categoria = 'peca_unica'  "
+                + ";";
+
+        Cursor c = le.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+            Vestuario vestuario = new Vestuario();
+
+            Long id_vestuario = c.getLong( c.getColumnIndex("id_vestuario") );
+            String descricao_vestuario = c.getString( c.getColumnIndex("descricao_vestuario") );
+            String imagem_vestuario = c.getString(c.getColumnIndex("imagem_vestuario"));
+            String status_doacao = c.getString(c.getColumnIndex("status_doacao"));
+            Long id_cor = c.getLong(c.getColumnIndex("id_cor"));
+            Long id_categoria = c.getLong(c.getColumnIndex("id_categoria"));
+            String nome_usuario = c.getString(c.getColumnIndex("nome_usuario"));
+
+            vestuario.setId_vestuario( id_vestuario );
+            vestuario.setDescricao_vestuario( descricao_vestuario);
+            vestuario.setImagem_vestuario(imagem_vestuario);
+            vestuario.setStatus_doacao(status_doacao);
+            vestuario.setId_cor(id_cor);
+            vestuario.setId_categoria(id_categoria);
+            vestuario.setNome_usuario(nome_usuario);
+
+            listaVestuarios.add( vestuario );
+        }
+        le.close();
+        return listaVestuarios;
+    }
+
     public List<Vestuario> listarPecaUnica(String usuario) {
         le = helper.getReadableDatabase();
         List<Vestuario> listaVestuarios = new ArrayList<>();
@@ -277,7 +314,7 @@ public class VestuarioDAO {
         le.close();
         return listaVestuarios;
     }
-    public List<Vestuario> listarAcesssorios(String usuario) {
+   public List<Vestuario> listarAcesssorios(String usuario) {
         le = helper.getReadableDatabase();
         List<Vestuario> listaVestuarios = new ArrayList<>();
         String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO
@@ -285,7 +322,7 @@ public class VestuarioDAO {
                 + " WHERE nome_usuario = '" + usuario + "'"
                 + " AND tipo_categoria = 'acessorio'  "
                 + ";";
-
+        Cursor c = le.rawQuery(sql, null);
         Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
@@ -307,8 +344,23 @@ public class VestuarioDAO {
             vestuario.setId_cor(id_cor);
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
+        while ( c.moveToNext() ){
+            Vestuario vestuario = new Vestuario();
+            Long id_vestuario = c.getLong( c.getColumnIndex("id_vestuario") );
+            String descricao_vestuario = c.getString( c.getColumnIndex("descricao_vestuario") );
+            String imagem_vestuario = c.getString(c.getColumnIndex("imagem_vestuario"));
+            String status_doacao = c.getString(c.getColumnIndex("status_doacao"));
+            Long id_cor = c.getLong(c.getColumnIndex("id_cor"));
+            Long id_categoria = c.getLong(c.getColumnIndex("id_categoria"));
+            String nome_usuario = c.getString(c.getColumnIndex("nome_usuario"));
 
-
+            vestuario.setId_vestuario( id_vestuario );
+            vestuario.setDescricao_vestuario( descricao_vestuario);
+            vestuario.setImagem_vestuario(imagem_vestuario);
+            vestuario.setStatus_doacao(status_doacao);
+            vestuario.setId_cor(id_cor);
+            vestuario.setId_categoria(id_categoria);
+            vestuario.setNome_usuario(nome_usuario);
             listaVestuarios.add( vestuario );
             Log.i("INFO", vestuario.getDescricao_vestuario() );
         }

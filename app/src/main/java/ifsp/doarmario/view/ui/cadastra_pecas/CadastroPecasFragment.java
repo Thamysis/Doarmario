@@ -149,8 +149,7 @@ public class CadastroPecasFragment extends Fragment {
                 if ((!descricao_vestuario.isEmpty()) && (url_imagem != null) ) {
                     Vestuario vestuario = new Vestuario(descricao_vestuario,url_imagem, status_vestuario,
                             cor.getId_cor(), categoria.getId_categoria(), nomeUsuarioAtual);
-
-                    if (vestuarioDAO.salvar(vestuario)) {
+               if (vestuarioDAO.salvar(vestuario)) {
                         vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
                         Long marcador_id_vestuario = vestuarioDAO.idUtlimoVestuario(nomeUsuarioAtual);
 
@@ -158,7 +157,9 @@ public class CadastroPecasFragment extends Fragment {
                                 marcador.getId_marcador(), marcador_id_vestuario);
 
                         //nota: fechar fragmento e voltar pra págiina inicial
+
                         if(marcador_vestuarioDAO.salvar(marcador_vestuario)){
+
 
                             Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!",
                                     Toast.LENGTH_SHORT).show();
@@ -167,7 +168,9 @@ public class CadastroPecasFragment extends Fragment {
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
+
                             fragmentTransaction.commit();
+
                         }
                     }
                     else {

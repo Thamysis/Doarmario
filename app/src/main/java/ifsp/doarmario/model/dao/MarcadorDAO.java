@@ -110,7 +110,6 @@ public class MarcadorDAO {
         le.close();
         return null;
     }
-
     public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
         List<Marcador> listaMarcadores = new ArrayList<>();
         String sql = "SELECT * FROM " + " marcador "

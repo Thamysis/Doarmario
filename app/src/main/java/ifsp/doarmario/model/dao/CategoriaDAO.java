@@ -105,6 +105,21 @@ public class CategoriaDAO {
         return true;
 
     }
+    public ArrayList<String> listarTipoCategoria() {
+        le = helper.getReadableDatabase();
+        ArrayList<String> listaTipoCategoria = new ArrayList<>();
+
+        String sql = "SELECT tipo_categoria FROM " + DbHelper.TABELA_CATEGORIA + " GROUP BY tipo_categoria ORDER BY tipo_categoria;";
+        Cursor c = le.rawQuery(sql, null);
+
+        while ( c.moveToNext() ){
+            String tipo_categoria = c.getString( c.getColumnIndex("tipo_categoria") );
+
+            listaTipoCategoria.add( tipo_categoria );
+        }
+        le.close();
+        return listaTipoCategoria;
+    }
     public Categoria detalhar ( Long id){
         le = helper.getReadableDatabase();
         String sql = "SELECT * FROM " + DbHelper.TABELA_CATEGORIA + " WHERE ID_CATEGORIA =" + id + " ;";

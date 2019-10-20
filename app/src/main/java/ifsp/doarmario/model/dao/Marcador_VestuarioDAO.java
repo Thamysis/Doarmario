@@ -24,7 +24,8 @@ public class Marcador_VestuarioDAO {
         ContentValues cv = new ContentValues();
         cv.put("id_marcador", marcador_vestuario.getId_marcador());
         cv.put("id_vestuario", marcador_vestuario.getId_vestuario());
-
+      
+        //o segundo parâmetro é para ter uma coluna específica como null
         try {
             escreve.insert(DbHelper.TABELA_MARCADOR_VESTUARIO, null, cv);
         } catch (Exception e) {

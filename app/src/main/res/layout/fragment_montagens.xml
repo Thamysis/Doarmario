@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="Implementar tela de listagem de montegem de peças."/>
-        android:text="Implementar tela de listagem de montegem de peças."
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:gravity="center|center_horizontal|center_vertical"

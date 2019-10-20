@@ -101,6 +101,7 @@ public class DetalhamentoPecasFragment extends Fragment {
         String concatenado = "";
 
         for (Marcador marcador: listaMarcadores)
+          
             concatenado = concatenado + marcador.getDescricao_marcador() + ", ";
 
         //marcadorVestuario =

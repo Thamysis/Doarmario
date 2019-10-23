@@ -42,12 +42,30 @@ public class MontaLooksFragment extends Fragment {
     private List<Vestuario> listaParteDeCima = new ArrayList<>();
     private List<Vestuario> listaParteDeBaixo = new ArrayList<>();
     private List<Vestuario> listaCalcado = new ArrayList<>();
+<<<<<<< HEAD
     private int posicao_parte_de_cima;
     private int posicao_parte_de_baixo;
     private int posicao_sapato;
     private List<Long> id_listaParteDeCima = new ArrayList<>();
     private List<Long> id_listaParteDeBaixo = new ArrayList<>();
     private List<Long> id_listaCalcado = new ArrayList<>();
+=======
+
+    private int posicao_parte_de_cima;
+    private int posicao_parte_de_baixo;
+    private int posicao_sapato;
+
+
+
+    private List<Long> id_listaParteDeCima = new ArrayList<>();
+    private List<Long> id_listaParteDeBaixo = new ArrayList<>();
+    private List<Long> id_listaCalcado = new ArrayList<>();
+
+
+    private int posicao_parte_de_cima;
+    private int posicao_parte_de_baixo;
+    private int posicao_sapato;
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
     private Vestuario vestuarioSelecionado;
     //filtro
     private TextView filtro;
@@ -65,6 +83,47 @@ public class MontaLooksFragment extends Fragment {
         listaParteDeBaixo = vestuarioDAO.listarParteDeBaixo(nomeUsuarioAtual);
         listaCalcado = vestuarioDAO.listarSapato(nomeUsuarioAtual);
         imagem_aleatorio = view.findViewById(R.id.imageView_aleatorio);
+<<<<<<< HEAD
+=======
+
+        //Padrão é ter parte_de_cima, parte_de_baixo e calcado
+        {
+            //1
+            seta_1_esquerda = view.findViewById(R.id.setaEsquerda_1);
+            seta_1_direita = view.findViewById(R.id.setaDireita_1);
+            imagem_parte_de_cima = view.findViewById(R.id.img_parte_de_cima);
+            //2
+            seta_2_esquerda = view.findViewById(R.id.setaEsquerda_2);
+            seta_2_direita = view.findViewById(R.id.setaDireita_2);
+            imagem_parte_de_baixo = view.findViewById(R.id.img_parte_de_baixo);
+            //3
+            seta_3_esquerda = view.findViewById(R.id.setaEsquerda_3);
+            seta_3_direita = view.findViewById(R.id.setaDireita_3);
+            imagem_sapato = view.findViewById(R.id.img_sapato);
+
+            //filtro
+            filtro= view.findViewById(R.id.textView_filtro);
+
+            if (listaCalcado.isEmpty() || listaParteDeBaixo.isEmpty() || listaParteDeCima.isEmpty()) {
+                AlertDialog alerta; //Cria o gerador do AlertDialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Erro");
+                builder.setMessage("Você deve cadastrar ao menos uma peça em cada categoria antes de realizar uma montagem!!!");
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //Toast.makeText(MainActivity.this, "positivo=" + arg1, Toast.LENGTH_SHORT).show();
+
+                        //Recuperar vestuario para edicao
+
+                        PaginaInicialFragment paginaInicialFragment = new PaginaInicialFragment();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("nomeUsuarioAtual", nomeUsuarioAtual);
+                        paginaInicialFragment.setArguments(bundle);
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
 
         //Padrão é ter parte_de_cima, parte_de_baixo e calcado
 
@@ -92,6 +151,7 @@ public class MontaLooksFragment extends Fragment {
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface arg0, int arg1) {
                     PaginaInicialFragment paginaInicialFragment = new PaginaInicialFragment();
+<<<<<<< HEAD
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("nomeUsuarioAtual", nomeUsuarioAtual);
                     paginaInicialFragment.setArguments(bundle);
@@ -100,6 +160,20 @@ public class MontaLooksFragment extends Fragment {
                     fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
                     fragmentManager.popBackStack();
                     fragmentTransaction.commit();
+=======
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("nomeUsuarioAtual", nomeUsuarioAtual);
+                    paginaInicialFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
+                    fragmentManager.popBackStack();
+                    fragmentTransaction.commit();
+
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
                 }
             });
             //cria o AlertDialog
@@ -109,6 +183,7 @@ public class MontaLooksFragment extends Fragment {
         } else {
             posicao_parte_de_cima = 0;
             posicao_parte_de_baixo = 0;
+<<<<<<< HEAD
             posicao_sapato = 0;
 
             seta_1_esquerda.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +251,39 @@ public class MontaLooksFragment extends Fragment {
             carregaImagens();
 
         }
+=======
+
+                carregaImagens();
+            }
+        });
+        seta_3_direita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                posicao_sapato ++;
+                carregaImagens();
+            }
+        });
+        filtro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               FiltroFragment filtroFragment = new FiltroFragment();
+
+                //Bundle bundle = new Bundle();
+                //bundle.putSerializable("vestuarioSelecionado", vestuarioSelecionado);
+                //detalhamentoPecasFragment.setArguments(bundle);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                fragmentTransaction.replace(R.id.nav_host_fragment, filtroFragment);
+                fragmentManager.popBackStack();
+                fragmentTransaction.commit();
+            }
+        });
+
+        //carregaImagens();
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
         return view;
     }
 
@@ -197,6 +305,7 @@ public class MontaLooksFragment extends Fragment {
             posicao_sapato = ultimoCalcadoPosicao;
         } else if (posicao_sapato > ultimoCalcadoPosicao) {
             posicao_sapato = 0;
+<<<<<<< HEAD
         }
         if(posicao_parte_de_cima < 0){
             posicao_parte_de_cima = ultimaParteDeCimaPosicao;
@@ -207,15 +316,99 @@ public class MontaLooksFragment extends Fragment {
             posicao_parte_de_baixo = ultimaParteDeBaixoPosicao;
         } else if(posicao_parte_de_baixo > ultimaParteDeBaixoPosicao){
             posicao_parte_de_baixo = 0;
+=======
+
+            seta_1_esquerda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_parte_de_cima--;
+                    carregaImagens();
+                }
+            });
+            seta_2_esquerda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_parte_de_baixo--;
+                    carregaImagens();
+                }
+            });
+            seta_3_esquerda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_sapato--;
+                    carregaImagens();
+                }
+            });
+
+            seta_1_direita.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_parte_de_cima++;
+                    carregaImagens();
+                }
+            });
+            seta_2_direita.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_parte_de_baixo++;
+                    carregaImagens();
+                }
+            });
+            seta_3_direita.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    posicao_sapato++;
+                    carregaImagens();
+                }
+            });
+
+            filtro.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FiltroFragment filtroFragment = new FiltroFragment();
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.nav_host_fragment, filtroFragment);
+                    fragmentManager.popBackStack();
+                    fragmentTransaction.commit();
+                }
+            });
+
+            imagem_aleatorio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    geraAleatorio();
+                }
+            });
+            carregaImagens();
+        }
+            return view;
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
         }
 
-        Vestuario vestuarioCalcado = listaCalcado.get(posicao_sapato);
-        Vestuario vestuarioParteDeCima = listaParteDeCima.get(posicao_parte_de_cima);
-        Vestuario vestuarioParteDeBaixo = listaParteDeBaixo.get(posicao_parte_de_baixo);
+        public void geraAleatorio () {
+            Random geradorAleatorio = new Random();
+            posicao_parte_de_cima = geradorAleatorio.nextInt(listaParteDeCima.size());
+            posicao_parte_de_baixo = geradorAleatorio.nextInt(listaParteDeBaixo.size());
+            posicao_sapato = geradorAleatorio.nextInt(listaCalcado.size());
+            carregaImagens();
+        }
 
-        imagem_parte_de_cima.setImageBitmap(BitmapFactory.decodeFile(vestuarioParteDeCima.getImagem_vestuario()));
-        imagem_parte_de_baixo.setImageBitmap(BitmapFactory.decodeFile(vestuarioParteDeBaixo.getImagem_vestuario()));
-        imagem_sapato.setImageBitmap(BitmapFactory.decodeFile(vestuarioCalcado.getImagem_vestuario()));
+        public void carregaImagens () {
+            int ultimoCalcadoPosicao, ultimaParteDeCimaPosicao, ultimaParteDeBaixoPosicao;
+            ultimoCalcadoPosicao = listaCalcado.size() - 1;
+            ultimaParteDeCimaPosicao = listaParteDeCima.size() - 1;
+            ultimaParteDeBaixoPosicao = listaParteDeBaixo.size() - 1;
 
+            if (posicao_sapato < 0) {
+                posicao_sapato = ultimoCalcadoPosicao;
+            } else if (posicao_sapato > ultimoCalcadoPosicao) {
+                posicao_sapato = 0;
+            }
     }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5

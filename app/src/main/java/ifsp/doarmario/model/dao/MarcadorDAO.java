@@ -113,8 +113,12 @@ public class MarcadorDAO {
         le.close();
         return null;
     }
+<<<<<<< HEAD
     /*
     public List<Marcador> retornaMarcadoresPeca(List<Marcador_Vestuario> listaMarcadoresVestuario) {
+=======
+    public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
         List<Marcador> listaMarcadores = new ArrayList<>();
         String sql = "SELECT * FROM " + " marcador "
                 + " INNER JOIN marcador_vestuario on marcador_vestuario.id_marcador = marcador.id_marcador "
@@ -138,6 +142,9 @@ public class MarcadorDAO {
         le.close();
         return listaMarcadores;
     }
+<<<<<<< HEAD
 
      */
+=======
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
 }

@@ -94,6 +94,7 @@ public class DetalhamentoPecasFragment extends Fragment {
         }
         String concatenado = "";
 
+<<<<<<< HEAD
         for (Marcador marcador: listaMarcadores){
             if(concatenado == ""){
                 concatenado = concatenado + marcador.getDescricao_marcador();
@@ -102,6 +103,11 @@ public class DetalhamentoPecasFragment extends Fragment {
             }
 
         }
+=======
+        for (Marcador marcador: listaMarcadores)
+          
+            concatenado = concatenado + marcador.getDescricao_marcador() + ", ";
+>>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
 
         //marcadorVestuario =
         edit_categoria_vestuario.setText(categoriaVestuario.getDescricao_categoria());

@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,7 @@ public class CadastroPecasFragment extends Fragment {
     private static final int REQUEST_IMAGE_CAPTURE = 3;
     static String mCurrentPhotoPath;
     private String nomeUsuarioAtual;
+    private VestuarioDAO vestuarioDAO;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +74,7 @@ public class CadastroPecasFragment extends Fragment {
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
 
        ((MainActivity) getActivity()).setToolbarTitle("Cadastrar peças");
-        final VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
         btt_imagem_vestuario = view.findViewById(R.id.btt_seleciona_img_vestuario);
         edit_descricao_vestuario = view.findViewById(R.id.descricao_vestuario);
         btt_adicionar = view.findViewById(R.id.bttAdicionar);
@@ -86,7 +88,6 @@ public class CadastroPecasFragment extends Fragment {
         CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
         MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
         final Marcador_VestuarioDAO marcador_vestuarioDAO = new Marcador_VestuarioDAO(getActivity());
-
 
         ArrayList<Cor> corLista = corDAO.listar();
         ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
@@ -148,9 +149,18 @@ public class CadastroPecasFragment extends Fragment {
                 if ((!descricao_vestuario.isEmpty()) && (url_imagem != null) ) {
                     Vestuario vestuario = new Vestuario(descricao_vestuario,url_imagem, status_vestuario,
                             cor.getId_cor(), categoria.getId_categoria(), nomeUsuarioAtual);
-                    if (vestuarioDAO.salvar(vestuario)) {
+               if (vestuarioDAO.salvar(vestuario)) {
+                        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+                        Long marcador_id_vestuario = vestuarioDAO.idUtlimoVestuario(nomeUsuarioAtual);
+
+                        Marcador_Vestuario marcador_vestuario = new Marcador_Vestuario(
+                                marcador.getId_marcador(), marcador_id_vestuario);
+
                         //nota: fechar fragmento e voltar pra págiina inicial
-                        if(marcador_vestuarioDAO.salvar(new Marcador_Vestuario(marcador.getId_marcador(), vestuario.getId_vestuario()))){
+
+                        if(marcador_vestuarioDAO.salvar(marcador_vestuario)){
+
+
                             Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!",
                                     Toast.LENGTH_SHORT).show();
 
@@ -158,7 +168,7 @@ public class CadastroPecasFragment extends Fragment {
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
-                            //fragmentManager.popBackStack();
+
                             fragmentTransaction.commit();
 
                         }

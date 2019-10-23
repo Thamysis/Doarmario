@@ -88,7 +88,6 @@ public class ThreeLevelListAdapter extends BaseExpandableListAdapter {
 
         String[] headers = secondLevel.get(groupPosition);
 
-
         List<String[]> childData = new ArrayList<>();
         HashMap<String, String[]> secondLevelData = data.get(groupPosition);
 

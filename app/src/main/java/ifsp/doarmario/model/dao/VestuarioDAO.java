@@ -6,13 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import ifsp.doarmario.model.vo.Vestuario;
 
 public class VestuarioDAO {
@@ -26,7 +24,6 @@ public class VestuarioDAO {
         le = helper.getReadableDatabase();
         this.context = context;
     }
-
     public boolean salvar(Vestuario vestuario) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_vestuario", vestuario.getDescricao_vestuario());
@@ -45,13 +42,24 @@ public class VestuarioDAO {
         escreve.close();
         return true;
     }
+    public Long idUtlimoVestuario(String usuario) {
+        Long id_vestuario = null;
+
+        String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO + " WHERE nome_usuario = '" + usuario + "';";
+
+        Cursor c = le.rawQuery(sql, null);
+
+        c.moveToLast();
+        id_vestuario = c.getLong( c.getColumnIndex("id_vestuario") );
+
+        le.close();
+        return id_vestuario;
+    }
     public boolean atualizar(Vestuario vestuario) {
         ContentValues cv = new ContentValues();
         cv.put("descricao_vestuario", vestuario.getDescricao_vestuario() );
         cv.put("id_cor", vestuario.getId_cor());
         cv.put("id_categoria",vestuario.getId_categoria());
-
-
         try {
             String[] args = {vestuario.getId_vestuario().toString()};
             escreve.update(DbHelper.TABELA_VESTUARIO, cv, "id_vestuario=?", args );
@@ -64,7 +72,6 @@ public class VestuarioDAO {
         return true;
     }
     public boolean atualizarDoada(Vestuario vestuario) {
-
         ContentValues cv = new ContentValues();
         cv.put("status_doacao", vestuario.getStatus_doacao());
 
@@ -96,7 +103,6 @@ public class VestuarioDAO {
         List<Vestuario> listaVestuarios = new ArrayList<>();
         String sql = "SELECT * FROM " + DbHelper.TABELA_VESTUARIO + " WHERE nome_usuario = '" + usuario + "';";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -116,9 +122,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -133,7 +137,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'roupa_de_cima'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -155,9 +158,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -172,7 +173,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'roupa_de_baixo'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -194,9 +194,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -210,7 +208,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'calcado'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -232,9 +229,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -248,7 +243,6 @@ public class VestuarioDAO {
                 + " AND tipo_categoria = 'peca_unica'  "
                 + ";";
 
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
 
         while ( c.moveToNext() ){
@@ -270,9 +264,7 @@ public class VestuarioDAO {
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
 
-
             listaVestuarios.add( vestuario );
-            Log.i("INFO", vestuario.getDescricao_vestuario() );
         }
         le.close();
         return listaVestuarios;
@@ -285,9 +277,8 @@ public class VestuarioDAO {
                 + " WHERE nome_usuario = '" + usuario + "'"
                 + " AND tipo_categoria = 'acessorio'  "
                 + ";";
-
-        Log.i("", sql);
         Cursor c = le.rawQuery(sql, null);
+        Log.i("", sql);
 
         while ( c.moveToNext() ){
             Vestuario vestuario = new Vestuario();
@@ -307,8 +298,6 @@ public class VestuarioDAO {
             vestuario.setId_cor(id_cor);
             vestuario.setId_categoria(id_categoria);
             vestuario.setNome_usuario(nome_usuario);
-
-
             listaVestuarios.add( vestuario );
             Log.i("INFO", vestuario.getDescricao_vestuario() );
         }

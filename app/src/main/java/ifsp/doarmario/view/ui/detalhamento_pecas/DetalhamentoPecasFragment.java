@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +54,7 @@ public class DetalhamentoPecasFragment extends Fragment {
         edit_descricao_vestuario = view.findViewById(R.id.edit_descricao_vestuario);
         edit_cor_vestuario = view.findViewById(R.id.edit_cor_vestuario);
         edit_categoria_vestuario = view.findViewById(R.id.edit_categoria_vestuario);
-        //COMECA MUDANÇA
         edit_marcador_vestuario = view.findViewById(R.id.edit_marcador_vestuario);
-        //FIM MUDANÇA
         btt_alterar = (Button) view.findViewById(R.id.bttAlterar);
         btt_edit_marcador = (ImageButton) view.findViewById(R.id.btt_edit_marcador);
         btt_edit_categoria = (ImageButton) view.findViewById(R.id.btt_edit_categoria);
@@ -65,58 +64,53 @@ public class DetalhamentoPecasFragment extends Fragment {
             imagem_vestuario.setImageBitmap(BitmapFactory.decodeFile(vestuarioAtual.getImagem_vestuario()));
         }
         edit_descricao_vestuario.setText( vestuarioAtual.getDescricao_vestuario() );
-        //COMECA MUDANÇA
-        //edit_descricao_vestuario.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-        //        Toast.makeText(getContext(), "clicou", Toast.LENGTH_SHORT).show();
-        //        edit_categoria_vestuario.setEnabled(true);
-        //    }
-        //});
-        //FIM MUDANÇA
+        edit_descricao_vestuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "clicou", Toast.LENGTH_SHORT).show();
+                edit_categoria_vestuario.setEnabled(true);
+            }
+        });
         CorDAO corDAO = new CorDAO(getActivity());
         CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
-        //COMECA MUDANÇA
         MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
         Marcador_VestuarioDAO marcador_vestuarioDAO = new Marcador_VestuarioDAO(getActivity());
-        //FIM MUDANÇA
-
         Cor corVestuario = corDAO.detalhar(vestuarioAtual.getId_cor());
         Categoria categoriaVestuario = categoriaDAO.detalhar(vestuarioAtual.getId_categoria());
+        final ArrayList<Cor> corLista = corDAO.listar();
+        final ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
+        final ArrayList<Marcador> marcadorLista = marcadorDAO.listar();
 
-        //marcadores
         List<Marcador_Vestuario> listaMarcadorVestuario = marcador_vestuarioDAO.listarMarcadores(vestuarioAtual.getId_vestuario());
-        List<Marcador> listaTodosMarcadores = marcadorDAO.listar();
         List<Marcador> listaMarcadores = new ArrayList<>();
 
-        for (Marcador_Vestuario marcadore_vestuario: listaMarcadorVestuario){
-             for(Marcador marcador:listaTodosMarcadores){
-                 if((marcador.getId_marcador()).equals(marcadore_vestuario.getId_marcador())){
+        for (Marcador marcador:marcadorLista){
+             for(Marcador_Vestuario marcadore_vestuario: listaMarcadorVestuario){
+                 if(marcador.getId_marcador() == marcadore_vestuario.getId_marcador()){
                      listaMarcadores.add(marcador);
-
                  }
              }
 
         }
-
         String concatenado = "";
 
-        for (Marcador marcador: listaMarcadores
-             )
-            concatenado = concatenado + marcador.getDescricao_marcador() + ", ";
+        for (Marcador marcador: listaMarcadores){
+            if(concatenado == ""){
+                concatenado = concatenado + marcador.getDescricao_marcador();
+            } else {
+                concatenado = concatenado + "," + marcador.getDescricao_marcador();
+            }
+
+        }
 
         //marcadorVestuario =
         edit_categoria_vestuario.setText(categoriaVestuario.getDescricao_categoria());
         edit_cor_vestuario.setText(corVestuario.getDescricao_cor());
-        edit_marcador_vestuario.setText(concatenado + " u ");
+        edit_marcador_vestuario.setText(concatenado);
 
         edit_cor_vestuario.setEnabled(false);
         edit_categoria_vestuario.setEnabled(false);
         edit_marcador_vestuario.setEnabled(false);
-
-        final ArrayList<Cor> corLista = corDAO.listar();
-        final ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
-        final ArrayList<Marcador> marcadorLista = marcadorDAO.listar();
 
         final ArrayAdapter<Cor> adapterCor = new ArrayAdapter<Cor>(getActivity(),R.layout.item_picker, corLista);
         final ArrayAdapter<Categoria> adapterCategoria = new ArrayAdapter<Categoria>(getActivity(),R.layout.item_picker, categoriaLista);
@@ -130,9 +124,9 @@ public class DetalhamentoPecasFragment extends Fragment {
         builderCategoria.setTitle("Selecione a categoria para alterar.");
         builderMarcador.setTitle("Selecione o marcador para alterar.");
 
-        id_categoria_alterada = Long.valueOf(0);
-        id_cor_alterada = Long.valueOf(0);
-        id_marcador_alterado = Long.valueOf(0);
+        id_categoria_alterada = 0L;
+        id_cor_alterada = 0L;
+        id_marcador_alterado = 0L;
         //define o diálogo como uma lista, passa o adapter.
         btt_edit_categoria.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,6 +161,23 @@ public class DetalhamentoPecasFragment extends Fragment {
             }
         });
 
+        btt_edit_marcador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builderMarcador.setSingleChoiceItems(adapterMarcador, 0, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int arg1) {
+                        edit_marcador_vestuario.setEnabled(true);
+                        edit_marcador_vestuario.setText( edit_marcador_vestuario.getText() + ", " +  marcadorLista.get(arg1).getDescricao_marcador());
+                        edit_marcador_vestuario.setEnabled(false);
+                        //id_marcador_alterado = marcadorLista.get(arg1).getId_marcador();
+                        pickerMarcador.dismiss();
+                    }
+                });
+                pickerMarcador = builderMarcador.create();
+                pickerMarcador.show();
+            }
+        });
+
         btt_alterar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,11 +193,11 @@ public class DetalhamentoPecasFragment extends Fragment {
                         vestuario.setId_cor(vestuarioAtual.getId_cor());
                     else
                         vestuario.setId_cor(id_cor_alterada);
-                    if(id_marcador_alterado == 0)
-                        vestuario.setId_marcador(vestuarioAtual.getId_marcador());
-                    else
-                        vestuario.setId_marcador(id_marcador_alterado);
-
+                    if(id_marcador_alterado == 0) {
+                        //vestuario.setId_marcador(vestuarioAtual.getId_marcador());
+                    }else {
+                        //vestuario.setId_marcador(id_marcador_alterado);
+                    }
                     vestuario.setId_vestuario(vestuarioAtual.getId_vestuario());
 
                     if (vestuarioDAO.atualizar(vestuario)) {

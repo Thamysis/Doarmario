@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ifsp.doarmario.model.vo.Marcador;
+import ifsp.doarmario.model.vo.Marcador_Vestuario;
 import ifsp.doarmario.model.vo.Vestuario;
 
 public class MarcadorDAO {
@@ -57,6 +58,8 @@ public class MarcadorDAO {
             listaMarcadores.add( marcador );
         }
         le.close();
+        Log.i("INFO", listaMarcadores.toString());
+
         return listaMarcadores;
     }
 
@@ -110,9 +113,8 @@ public class MarcadorDAO {
         le.close();
         return null;
     }
-<<<<<<< HEAD
-
-    public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
+    /*
+    public List<Marcador> retornaMarcadoresPeca(List<Marcador_Vestuario> listaMarcadoresVestuario) {
         List<Marcador> listaMarcadores = new ArrayList<>();
         String sql = "SELECT * FROM " + " marcador "
                 + " INNER JOIN marcador_vestuario on marcador_vestuario.id_marcador = marcador.id_marcador "
@@ -136,6 +138,6 @@ public class MarcadorDAO {
         le.close();
         return listaMarcadores;
     }
-=======
->>>>>>> d1a6c93abaad85441e0290c3d412e4659c110349
+
+     */
 }

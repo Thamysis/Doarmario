@@ -1,7 +1,6 @@
 package ifsp.doarmario.model.dao;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -18,10 +17,8 @@ public class DbHelper extends SQLiteOpenHelper {
     public static String TABELA_CATEGORIA = "categoria";
     public static String TABELA_COR = "cor";
     public static String TABELA_MARCADOR = "marcador";
-    public static String TABELA_MARCADOR_VESTUARIO = "marcador_vestuario";
     public static String TABELA_MONTAGEM = "montagem";
     public static String TABELA_MONTAGEM_VESTUARIO = "montagem_vestuario";
-
     public static Context context;
     public static DbHelper database;
 
@@ -33,6 +30,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //criação das tabelas
+        //tabela usuário
         String sql_create_Usuario = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_USUARIO
                 + "("
@@ -40,13 +38,14 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "email VARCHAR(100) NOT NULL, "
                 + "senha VARCHAR(100) NOT NULL"
                 + ");";
-
+        //tabela cor
         String sql_create_Cor = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_COR
                 + "( "
                 + "id_cor INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "descricao_cor TEXT NOT NULL "
                 + ");";
+        //tabela categoria
         String sql_create_Categoria = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_CATEGORIA
                 + "( "
@@ -54,13 +53,14 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "descricao_categoria TEXT NOT NULL, "
                 + "tipo_categoria TEXT NOT NULL "
                 + ");";
+        //tabela marcador
         String sql_create_Marcador = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_MARCADOR
                 + "( "
                 + "id_marcador INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "descricao_marcador TEXT NOT NULL "
                 + ");";
-
+        //tabela vestuario
         String sql_create_Vestuario = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_VESTUARIO
                 + "( "
@@ -70,26 +70,20 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "status_doacao TEXT NOT NULL,"
                 + "id_cor INTEGER,"
                 + "id_categoria INTEGER,"
+                + "id_marcador INTEGER,"
                 + "nome_usuario TEXT NOT NULL,"
-                + "FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria)"
+                + "FOREIGN KEY(id_categoria) REFERENCES categoria(id_categoria),"
+                + "FOREIGN KEY(id_cor) REFERENCES categoria(id_cor),"
+                + "FOREIGN KEY(id_marcador) REFERENCES categoria(id_marcador)"
                 + ");";
-
-        String sql_create_Marcador_Vestuario = "CREATE TABLE IF NOT EXISTS "
-                + TABELA_MARCADOR_VESTUARIO
-                + "("
-                + "id_marcador INTEGER NOT NULL,"
-                + "id_vestuario INTEGER NOT NULL,"
-                + "FOREIGN KEY(id_marcador) REFERENCES marcador(id_marcador),"
-                + "FOREIGN KEY(id_vestuario) REFERENCES vestuario(id_vestuario)"
-                + ");";
-
+        //tabela montagem
         String sql_create_Montagem = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_MONTAGEM
                 + "("
                 + "id_montagem INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "data_montagem TEXT NOT NULL"
                 + ");";
-
+        //tabela montagem_vestuario
         String sql_create_Montagem_Vestuario = "CREATE TABLE IF NOT EXISTS "
                 + TABELA_MONTAGEM_VESTUARIO
                 + " ("
@@ -105,13 +99,12 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(sql_create_Cor);
             db.execSQL(sql_create_Marcador);
             db.execSQL(sql_create_Vestuario);
-            db.execSQL(sql_create_Marcador_Vestuario);
             db.execSQL(sql_create_Montagem);
             db.execSQL(sql_create_Montagem_Vestuario);
 
-            Log.i("", "Tabelas criadas com sucesso!");
+            Log.i("INFO_DB", "Tabelas criadas com sucesso!");
         } catch (Exception e) {
-            Log.i("excecao", "excecao" + e.getMessage());
+            Log.i("INFO_DB", "Erro ao criar tabelas" + e.getMessage());
         }
 
         cargaInicial(db);
@@ -160,9 +153,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 }
             }
 
-            Log.i("CERTO", "Inserções realizadas com sucesso!");
+            Log.i("INFO_DB", "Inserções realizadas com sucesso!");
         } catch (Exception e) {
-            Log.i("ERRO", "excecao" + e.getMessage());
+            Log.i("INFO_DB", "Erro ao realizar inserções." + e.getMessage());
         }
     }
 
@@ -173,7 +166,6 @@ public class DbHelper extends SQLiteOpenHelper {
         String drop_Categoria = "DROP TABLE IF EXISTS " + TABELA_CATEGORIA + " ;" ;
         String drop_Cor = "DROP TABLE IF EXISTS " + TABELA_COR + " ;" ;
         String drop_Marcador = "DROP TABLE IF EXISTS " + TABELA_MARCADOR + " ;" ;
-        String drop_Marcador_Vestuario = "DROP TABLE IF EXISTS " + TABELA_MARCADOR_VESTUARIO + " ;" ;
         String drop_Montagem = "DROP TABLE IF EXISTS " + TABELA_MONTAGEM + " ;" ;
         String drop_Montagem_Vestuario = "DROP TABLE IF EXISTS " + TABELA_MONTAGEM_VESTUARIO + " ;" ;
 
@@ -183,14 +175,13 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(drop_Categoria);
             db.execSQL(drop_Cor);
             db.execSQL(drop_Marcador);
-            db.execSQL(drop_Marcador_Vestuario);
             db.execSQL(drop_Montagem);
             db.execSQL(drop_Montagem_Vestuario);
 
             onCreate(db);
-            Log.i("INFO DB", "Sucesso ao atualizar App" );
+            Log.i("INFO_DB", "Sucesso ao atualizar App" );
         }catch (Exception e){
-            Log.i("INFO DB", "Erro ao atualizar App" + e.getMessage() );
+            Log.i("INFO_DB", "Erro ao atualizar App" + e.getMessage() );
         }
     }
 }

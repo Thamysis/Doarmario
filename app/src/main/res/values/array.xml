@@ -1,68 +1,31 @@
 <resources>
     <!-- COR -->
     <string-array name="cor">
-        <item>Abóbora</item>
-        <item>Açafrão</item>
         <item>Amarelo</item>
-        <item>Âmbar</item>
-        <item>Ameixa</item>
-        <item>Amêndoa</item>
-        <item>Ametista</item>
-        <item>Anil</item>
         <item>Azul</item>
         <item>Bege</item>
-        <item>Bordô</item>
         <item>Branco</item>
-        <item>Bronze</item>
-        <item>Cáqui</item>
         <item>Caramelo</item>
-        <item>Carmesim</item>
-        <item>Carmim</item>
-        <item>Canário</item>
-        <item>Castanho</item>
-        <item>Cereja</item>
-        <item>Chocolate</item>
-        <item>Ciano</item>
         <item>Cinza</item>
-        <item>Cinzento</item>
-        <item>Cobre</item>
         <item>Coral</item>
         <item>Creme</item>
-        <item>Damasco</item>
         <item>Dourado</item>
-        <item>Escarlate</item>
-        <item>Esmeralda</item>
-        <item>Ferrugem</item>
         <item>Fúcsia</item>
-        <item>Gelo</item>
-        <item>Grená</item>
-        <item>Gris</item>
-        <item>Índigo</item>
-        <item>Jade</item>
-        <item>Jambo</item>
         <item>Laranja</item>
         <item>Lavanda</item>
         <item>Lilás </item>
         <item>Limão</item>
         <item>Magenta</item>
-        <item>Malva</item>
-        <item>Marfim</item>
         <item>Marrom</item>
         <item>Mostarda</item>
-        <item>Negro</item>
-        <item>Ocre</item>
-        <item>Oliva</item>
-        <item>Ouro</item>
         <item>Pêssego</item>
         <item>Prata</item>
         <item>Preto</item>
         <item>Púrpura</item>
         <item>Rosa</item>
         <item>Roxo</item>
-        <item>Rubro</item>
         <item>Salmão</item>
         <item>Sépia</item>
-        <item>Terracota</item>
         <item>Turquesa</item>
         <item>Verde</item>
         <item>Vermelho</item>
@@ -99,18 +62,21 @@
         <item>Flare</item>
         <item>Cargo</item>
         <item>Pantacourt</item>
+        <item>Calça</item>
         <item>Calça social</item>
         <item>Saruel</item>
         <item>Capri</item>
-        <item>Jeans</item>
+        <item>Calça Jeans</item>
         <item>Legging</item>
         <item>Harem</item>
         <item>Moletom</item>
+        <item>Shorts</item>
         <item>Short jeans</item>
         <item>Short social</item>
         <item>Short saia</item>
         <item>Bermuda</item>
         <item>Minissaia</item>
+        <item>Saia</item>
         <item>Saia Jeans</item>
         <item>Saia Lápis</item>
         <item>Saia Longa</item>
@@ -135,40 +101,16 @@
         <item>Bota</item>
     </string-array>
 
-    <string-array name="peca_unica">
-        <item>Vestidos</item>
-        <item>Social</item>
-        <item>Longuete</item>
-        <item>Macaquinho</item>
-        <item>Macacão</item>
-        <item>Jardineira</item>
-        <item>Salopete</item>
-    </string-array>
-
-    <string-array name="acessorio">
-        <item>Bolsa</item>
-        <item>Cachecol</item>
-        <item>Luva</item>
-        <item>Lenço</item>
-        <item>Meia-calça</item>
-        <item>Meia</item>
-        <item>Suspensório</item>
-        <item>Relógio</item>
-        <item>Pulseira</item>
-        <item>Brinco</item>
-        <item>Colar</item>
-        <item>Anel</item>
-        <item>Broche</item>
-        <item>Óculos</item>
-    </string-array>
-
     <!-- MARCADORES -->
     <string-array name="marcador">
         <item>Festa</item>
-        <item>SNCT</item>
+        <item>Igreja</item>
         <item>Escola</item>
         <item>Academia</item>
+        <item>Trabalho</item>
         <item>Social</item>
+        <item>Casual</item>
+        <item>Teste</item>
     </string-array>
 
 </resources>

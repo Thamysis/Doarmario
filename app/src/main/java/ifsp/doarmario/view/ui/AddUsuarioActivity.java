@@ -25,13 +25,14 @@ public class AddUsuarioActivity extends AppCompatActivity {
     private String email;
     private String senha;
     private String senhaConfirm;
+    private UsuarioDao usuarioDao;
 
     private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastro_usuario);
+        setContentView(R.layout.activity_cadastro_usuario);
 
         //preferências
         preferences = getSharedPreferences("usuario_detalhes", MODE_PRIVATE);
@@ -42,6 +43,7 @@ public class AddUsuarioActivity extends AppCompatActivity {
         txtSenha = findViewById(R.id.txtSenha);
         txtSenhaConfirm = findViewById(R.id.txtSenhaConfirm);
         bttAdd = findViewById(R.id.bttAdd);
+        usuarioDao = new UsuarioDao();
 
         txtNome.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -109,7 +111,7 @@ public class AddUsuarioActivity extends AppCompatActivity {
         if(valida) {
             Usuario usuariovo = new Usuario(nome_usuario, email, senha);
 
-            boolean resposta = UsuarioDao.usuarioDao.salvar(usuariovo);
+            boolean resposta = usuarioDao.salvar(usuariovo);
 
             if(resposta) {
                 SharedPreferences.Editor editor = preferences.edit();

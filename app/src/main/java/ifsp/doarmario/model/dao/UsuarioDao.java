@@ -9,46 +9,59 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import ifsp.doarmario.model.vo.Montagem;
 import ifsp.doarmario.model.vo.Usuario;
 
-//Nessa classe estão contidas informações sobre o Login e o usuario
 public class UsuarioDao {
-    private SQLiteDatabase write;
-    private SQLiteDatabase read;
+    private SQLiteDatabase escreve;
+    private SQLiteDatabase le;
+    private boolean status;
 
     public static UsuarioDao usuarioDao;
 
-    public UsuarioDao(Context context) {
-        //DbHelper db = new DbHelper(context);
-        write = DbHelper.database.getWritableDatabase();
-        read = DbHelper.database.getReadableDatabase();
+    public boolean deletar(Usuario usuario) {
+        escreve = DbHelper.database.getWritableDatabase();
 
-        //Usuario usuarioTeste = new Usuario("yasmin_deodato", "yasmin.deodato.beatriz@gmail.com", "yasmin123");
-        //salvar(usuarioTeste);
+        try {
+            String[] args = { usuario.getNome_usuario() };
+
+            escreve.delete(DbHelper.TABELA_VESTUARIO, "nome_usuario=?", args);
+            escreve.delete(DbHelper.TABELA_USUARIO, "nome_usuario=?", args);
+
+            status = true;
+        } catch (Exception e){
+            Log.i("AAA", e.getMessage());
+            status = false;
+        } finally {
+            escreve.close();
+        }
+
+        return status;
     }
-
     public boolean salvar(Usuario usuario) {
+        escreve = DbHelper.database.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("nome_usuario", usuario.getNome_usuario());
         cv.put("email", usuario.getEmail());
         cv.put("senha", usuario.getSenha());
 
-        //o segundo parâmetro é para ter uma coluna específica como null
         try {
-            write.insert(DbHelper.TABELA_USUARIO, null, cv);
+            escreve.insert(DbHelper.TABELA_USUARIO, null, cv);
+            status = true;
         } catch (Exception e) {
-            Log.i("", "excecao " + e.getMessage());
-            return false;
+            status = false;
         }
-        return true;
+
+        return status;
     }
 
     public List<Usuario> listar() {
+        le = DbHelper.database.getReadableDatabase();
         List<Usuario> usuarios = new ArrayList<>();
 
         String sql = "SELECT * FROM " + DbHelper.TABELA_USUARIO + ";";
-        //segundo parâmetro são filtros
-        Cursor c = read.rawQuery(sql, null);
+
+        Cursor c = le.rawQuery(sql, null);
 
         while (c.moveToNext()) {
             Usuario usuario = new Usuario();
@@ -59,38 +72,42 @@ public class UsuarioDao {
             usuarios.add(usuario);
         }
 
+        le.close();
         return usuarios;
     }
 
     public boolean verificarUsuario(String nome_usuarioRec) {
-        boolean existencia = false;
+        le = DbHelper.database.getReadableDatabase();
+
         Usuario usuario = new Usuario();
         String sql = "SELECT * FROM " + DbHelper.TABELA_USUARIO + " WHERE nome_usuario = ?";
 
         try {
-            Cursor c = read.rawQuery(sql, new String[]{nome_usuarioRec});
+            Cursor c = le.rawQuery(sql, new String[]{nome_usuarioRec});
 
             int colNome_usuario = c.getColumnIndex("nome_usuario");
 
             c.moveToFirst();
             if(!c.getString(colNome_usuario).isEmpty()){
-                existencia = true;
+                status = true;
             }
         } catch (Exception e) {
-            //Log.i("", "Exceção " + e.getMessage());
+           status = false;
+        } finally {
+            le.close();
         }
 
-        return existencia;
+        return status;
     }
 
     public Usuario detalhar(String nome_usuarioRec) {
+        le = DbHelper.database.getReadableDatabase();
         Usuario usuario = new Usuario();
 
         String sql = "SELECT * FROM " + DbHelper.TABELA_USUARIO + " WHERE nome_usuario = ?";
 
-        //segundo parâmetro são filtros
         try {
-            Cursor c = read.rawQuery(sql, new String[]{nome_usuarioRec});
+            Cursor c = le.rawQuery(sql, new String[]{nome_usuarioRec});
 
             int colNome_usuario = c.getColumnIndex("nome_usuario");
             int colEmail = c.getColumnIndex("email");
@@ -100,50 +117,45 @@ public class UsuarioDao {
             usuario.setNome_usuario(c.getString(colNome_usuario));
             usuario.setEmail(c.getString(colEmail));
             usuario.setSenha(c.getString(colSenha));
-
-            Log.i("", "Usuario listado com sucesso");
         } catch (Exception e) {
-            Log.i("", "Exceção " + e.getMessage());
+            usuario = null;
+        } finally {
+            le.close();
         }
 
         return usuario;
     }
 
     public boolean atualizar(Usuario usuario) {
+        escreve = DbHelper.database.getWritableDatabase();
+
         ContentValues cv = new ContentValues();
         cv.put("email", usuario.getEmail());
         cv.put("senha", usuario.getSenha());
 
         try {
-            String[] argumentos = {usuario.getNome_usuario().toString()};
-            write.update(DbHelper.TABELA_USUARIO, cv, "nome_usuario=?", argumentos);
-            Log.i("INFO", "Usuario atualizado com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao atualizar usuario " + e.getMessage() );
-            return false;
+            String[] argumentos = {usuario.getNome_usuario()};
+            escreve.update(DbHelper.TABELA_USUARIO, cv, "nome_usuario=?", argumentos);
+            status = true;
+        } catch (Exception e){
+            status = false;
+        } finally {
+            escreve.close();
         }
 
-        return true;
+        return status;
     }
 
-    public boolean deletar(Usuario usuario) {
-        try {
-            String[] argumentos = {usuario.getNome_usuario().toString() };
-            write.delete(DbHelper.TABELA_USUARIO, "nome_usuario=?", argumentos );
-            Log.i("INFO", "Usuario removido com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao remover usuario " + e.getMessage() );
-            return false;
-        }
 
-        return true;
-    }
     public boolean login(String email) {
+        le = DbHelper.database.getReadableDatabase();
+
         String sql = "SELECT * FROM " + DbHelper.TABELA_USUARIO + " WHERE email = ?";
         String verifica;
         boolean existe = false;
+
         try {
-            Cursor c = read.rawQuery(sql, new String[]{email});
+            Cursor c = le.rawQuery(sql, new String[]{email});
 
             int colEmail = c.getColumnIndex("email");
             c.moveToFirst();
@@ -151,37 +163,34 @@ public class UsuarioDao {
 
             if (!verifica.equals(null)) {
                 existe = true;
-                return existe;
             }
         } catch (Exception e) {
-            return existe;
+            existe = false;
+        } finally {
+            le.close();
         }
 
         return existe;
     }
 
     public String verificaSenha(String email, String senha){
-        String nome_usuario = null;
+        le = DbHelper.database.getReadableDatabase();
+        String nome_usuario = "";
         String sql = "SELECT * FROM " + DbHelper.TABELA_USUARIO + " WHERE email = ? AND senha = ?";
 
         try {
-            Cursor c = read.rawQuery(sql, new String[]{email, senha});
+            Cursor c = le.rawQuery(sql, new String[]{email, senha});
             int colNomeUsuario = c.getColumnIndex("nome_usuario");
 
             if(c.moveToFirst()){
                 nome_usuario = c.getString(colNomeUsuario);
-                return nome_usuario;
             }
-        } catch (Exception e) { }
+        } catch (Exception e) {
+            nome_usuario = null;
+        } finally {
+            le.close();
+        }
 
         return nome_usuario;
     }
-
-    public void atualizarSenha(String email, String senha) {
-        ContentValues values = new ContentValues();
-        values.put("senha", senha);
-        write.update(DbHelper.TABELA_USUARIO, values, "email = ?", new String[]{email});
-    }
-
-
 }

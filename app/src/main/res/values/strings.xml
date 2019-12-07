@@ -84,9 +84,8 @@
     <string name="cadastrarPeças">Cadastrar</string>
     <string name="listar">Listar todas as peças</string>
     <string name="listadoadas">Listar peças doadas</string>
-    <string name="listaNaoUtilizadas">Listar peças não utilizadas</string>
+    <string name="listaNaoUtilizadas">Cadastrar doação</string>
     <string name="listaMontagem">Listar montagens</string>
-    s
     <string name="botao_salvar">Salvar</string>
     <string name="filtrar_montagem">Filtrar</string>
     <string name="escolher_data">Escolha uma data</string>
@@ -98,7 +97,7 @@
     <string name="cadastrar_peças"> Cadastrar peças</string>
     <string name="pecas">Peças</string>
     <string name="peças_doadas">Peças doadas</string>
-    <string name="peças_nao_utilizadas">Peças não utilizadas</string>
+    <string name="peças_doacao">Cadastrar doação</string>
     <string name="montagens">Montagens</string>
     <string name="sobre_as_desenvolvedoras">Sobre as desenvolvedoras</string>
     <string name="sair">Sair</string>
@@ -118,5 +117,14 @@
     <!--filtros-->
     <string name="filtros">Filtros </string>
     <string name="filtros_aplicar">Aplicar filtros</string>
+
+    <!--montagem-->
+    <string name="nenhuma_montagem">Nenhuma montagem foi encontrada cadastrada nessa data!</string>
+    <string name="montagem_seta">Clique na seta para ver mais montagens dessa data</string>
+    <string name="montagem_erro_carregar">Não foi possível carregar</string>
+    <string name="montagem_salvar_sucesso">Montagem salva com sucesso!</string>
+    <string name="montagem_salvar_erro">Não foi possível salvar montagem!</string>
+
+    <string name="vestuario_salvar_sucesso">Sucesso ao salvar Vestuário</string>
 
 </resources>

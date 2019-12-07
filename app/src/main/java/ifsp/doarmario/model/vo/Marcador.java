@@ -1,6 +1,8 @@
 package ifsp.doarmario.model.vo;
 
-public class Marcador {
+import java.io.Serializable;
+
+public class Marcador implements Serializable {
     private Long id_marcador;
     private String descricao_marcador;
 

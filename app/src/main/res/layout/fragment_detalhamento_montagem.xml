@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="25dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/txtData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="@string/escolher_data"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txtSeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/montagem_seta"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/setaDireita"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="2"
+                app:srcCompat="@drawable/ic_seta_direita"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_parte_de_cima"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:src="@drawable/branco" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mais_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_mais"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_parte_de_baixo"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:src="@drawable/branco" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/mais_2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:srcCompat="@drawable/ic_mais"
+                tools:ignore="VectorDrawableCompat" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_sapato"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:src="@drawable/branco" />
+
+    </LinearLayout>
+</ScrollView>

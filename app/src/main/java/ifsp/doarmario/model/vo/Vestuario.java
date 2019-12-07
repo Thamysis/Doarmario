@@ -19,13 +19,32 @@ public class Vestuario implements Serializable {
         this.imagem_vestuario = imagem_vestuario;
         this.status_doacao = status_doacao;
     }
-    public Vestuario( String descricao_vestuario, String imagem_vestuario, String status_doacao, Long id_cor, Long id_categoria,  String nome_usuario ) {
+
+
+    public Vestuario( String descricao_vestuario, String imagem_vestuario, String status_doacao, Long id_cor, Long id_categoria, Long id_marcador, String nome_usuario ) {
         this.descricao_vestuario = descricao_vestuario;
         this.imagem_vestuario = imagem_vestuario;
         this.status_doacao = status_doacao;
         this.id_cor = id_cor;
         this.id_categoria = id_categoria;
+        this.id_marcador= id_marcador;
         this.nome_usuario = nome_usuario;
+    }
+
+    public Long getId_vestuario() {
+        return id_vestuario;
+    }
+
+    public void setId_vestuario(Long id_vestuario) {
+        this.id_vestuario = id_vestuario;
+    }
+
+    public String getDescricao_vestuario() {
+        return descricao_vestuario;
+    }
+
+    public void setDescricao_vestuario(String descricao_vestuario) {
+        this.descricao_vestuario = descricao_vestuario;
     }
 
     public String getNome_usuario() {
@@ -35,6 +54,7 @@ public class Vestuario implements Serializable {
     public void setNome_usuario(String nome_usuario) {
         this.nome_usuario = nome_usuario;
     }
+
     public Long getId_categoria() {
         return id_categoria;
     }
@@ -57,22 +77,6 @@ public class Vestuario implements Serializable {
 
     public void setId_marcador(Long id_marcador) {
         this.id_marcador = id_marcador;
-    }
-
-    public Long getId_vestuario() {
-        return id_vestuario;
-    }
-
-    public void setId_vestuario(Long id_vestuario) {
-        this.id_vestuario = id_vestuario;
-    }
-
-    public String getDescricao_vestuario() {
-        return descricao_vestuario;
-    }
-
-    public void setDescricao_vestuario(String descricao_vestuario) {
-        this.descricao_vestuario = descricao_vestuario;
     }
 
     public String getImagem_vestuario() {

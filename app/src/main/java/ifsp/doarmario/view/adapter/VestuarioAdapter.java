@@ -1,6 +1,7 @@
 package ifsp.doarmario.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,10 @@ import ifsp.doarmario.model.vo.Vestuario;
 public class VestuarioAdapter extends RecyclerView.Adapter<VestuarioAdapter.MyViewHolder> {
 
     private List<Vestuario> listaVestuarios;
-    private Context context;
+    private Vestuario vestuario;
 
-    public VestuarioAdapter(List<Vestuario> lista, Context c) {
+    public VestuarioAdapter(List<Vestuario> lista) {
         this.listaVestuarios = lista;
-        context = c;
     }
 
     @Override
@@ -37,11 +37,13 @@ public class VestuarioAdapter extends RecyclerView.Adapter<VestuarioAdapter.MyVi
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Vestuario vestuario = listaVestuarios.get(position);
-        holder.textView.setText( vestuario.getDescricao_vestuario() + "" );
+        vestuario = listaVestuarios.get(position);
 
         if(vestuario.getImagem_vestuario() != null){
-            holder.imageView.setImageBitmap(BitmapFactory.decodeFile(vestuario.getImagem_vestuario()));
+            Bitmap img = BitmapFactory.decodeFile(vestuario.getImagem_vestuario());
+            holder.imageView.setImageBitmap(img);
+            holder.textView.setText( vestuario.getDescricao_vestuario() + "" );
+
         } else{
         }
     }

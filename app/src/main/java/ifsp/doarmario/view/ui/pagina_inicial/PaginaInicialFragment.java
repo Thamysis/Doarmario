@@ -26,6 +26,7 @@ import ifsp.doarmario.view.ui.detalhamento_pecas.DetalhamentoPecasFragment;
 public class PaginaInicialFragment extends Fragment {
     private FloatingActionButton btt_camera;
     private TextView contDoadas;
+    private TextView txt_pecas_doadas;
     private VestuarioDAO vestuarioDAO;
     private String nomeUsuarioAtual;
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,10 +36,17 @@ public class PaginaInicialFragment extends Fragment {
         ((MainActivity) getActivity()).setToolbarTitle("Página inicial");
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
         contDoadas = view.findViewById(R.id.txt_doadas);
-        vestuarioDAO = new VestuarioDAO(getContext());
+        txt_pecas_doadas = view.findViewById(R.id.txt_pecas_doadas);
+        vestuarioDAO = new VestuarioDAO();
         List<Vestuario> vestuarioList = vestuarioDAO.listarDoadas(nomeUsuarioAtual);
         int contagem = vestuarioList.size();
         contDoadas.setText(contagem + "");
+
+        if(contagem == 1) {
+            txt_pecas_doadas.setText("peça doada");
+        } else {
+            txt_pecas_doadas.setText(R.string.pecas_doadas);
+        }        //contDoadas.setText(0 + "");
 
         btt_camera = view.findViewById(R.id.btt_camera);
         btt_camera.setOnClickListener(new View.OnClickListener() {

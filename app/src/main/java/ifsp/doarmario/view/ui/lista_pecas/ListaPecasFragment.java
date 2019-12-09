@@ -36,7 +36,7 @@ public class ListaPecasFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, final Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista_pecas, container, false);
+        View view = inflater.inflate(R.layout.fragment_listagem_pecas, container, false);
 
         //recuperar nome do usuário atual
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
@@ -88,7 +88,7 @@ public class ListaPecasFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+                                        VestuarioDAO vestuarioDAO = new VestuarioDAO();
                                         if ( vestuarioDAO.deletar(vestuarioSelecionado) ){
 
                                             carregarListaVestuario();
@@ -125,22 +125,15 @@ public class ListaPecasFragment extends Fragment {
 
     public void carregarListaVestuario(){
         //Listar vestuario
-        VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity());
+        VestuarioDAO vestuarioDAO = new VestuarioDAO();
         listaVestuario = vestuarioDAO.listar(nomeUsuarioAtual);
-
-
-        /*
-            Exibe lista de tarefas no Recyclerview
-        */
-
         //Configurar um adapter
-        vestuarioAdapter = new VestuarioAdapter(listaVestuario, getActivity().getApplicationContext() );
+        vestuarioAdapter = new VestuarioAdapter(listaVestuario );
 
         //Configurar Recyclerview
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 3 );
         recyclerView.setLayoutManager( layoutManager );
         recyclerView.setHasFixedSize(true);
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayout.VERTICAL));
         recyclerView.setAdapter(vestuarioAdapter);
 
     }

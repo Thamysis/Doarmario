@@ -13,84 +13,64 @@ import ifsp.doarmario.model.vo.Montagem_Vestuario;
 import ifsp.doarmario.model.vo.Vestuario;
 
 public class Montagem_VestuarioDao {
-    private SQLiteDatabase write;
-    private SQLiteDatabase read;
-
-    public static Montagem_VestuarioDao montagem_VestuarioDao;
-
-    public Montagem_VestuarioDao(Context context) {
-        write = DbHelper.database.getWritableDatabase();
-        read = DbHelper.database.getReadableDatabase();
-    }
+    private SQLiteDatabase escreve;
+    private SQLiteDatabase le;
+    private boolean status;
 
     public boolean salvar(Montagem_Vestuario montagem_vestuario) {
+        escreve = DbHelper.database.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("id_montagem", montagem_vestuario.getId_montagem());
         cv.put("id_vestuario", montagem_vestuario.getId_vestuario());
 
-        //o segundo parâmetro é para ter uma coluna específica como null
         try {
-            write.insert(DbHelper.TABELA_MONTAGEM, null, cv);
+            escreve.insert(DbHelper.TABELA_MONTAGEM_VESTUARIO, null, cv);
+            status = true;
         } catch (Exception e) {
-            Log.i("", "excecao " + e.getMessage());
-            return false;
+            status = false;
+        } finally {
+            escreve.close();
         }
 
-        return true;
+        return status;
     }
 
-    public List<Montagem_Vestuario> listar(Long id_montagem) {
-        List<Montagem_Vestuario> montagem_vestuarios = new ArrayList<>();
+    public ArrayList<Long> listar(Long id_montagem) {
+        le = DbHelper.database.getReadableDatabase();
+        ArrayList<Long> id_vestuarios = new ArrayList<Long>();
 
-        //OBTER LISTA DE MONTAGEM_VESTUARIO
+        //Obter lista de Vestuarios que fazem parte de uma montagem específica
         String sql = "SELECT * FROM " + DbHelper.TABELA_MONTAGEM_VESTUARIO + " WHERE id_montagem = ?";
 
         try {
-            Cursor c = read.rawQuery(sql, new String[]{id_montagem + ""});
-
-            c.moveToFirst();
-
-            //percorrer a listagem
-            while (c.moveToNext()) {
-                Montagem_Vestuario montagem_vestuario = new Montagem_Vestuario();
-                int colIdMontagem = c.getInt(c.getColumnIndex("id_montagem"));
-                int colIdVestuario = c.getInt(c.getColumnIndex("id_vestuario"));
-
-                montagem_vestuario.setId_montagem(c.getLong(colIdMontagem));
-                montagem_vestuario.setId_vestuario(c.getLong(colIdVestuario));
-
-                montagem_vestuarios.add(montagem_vestuario);
+            Cursor c = le.rawQuery(sql, new String[]{id_montagem + ""});
+            //c.moveToFirst();
+            while(c.moveToNext()) {
+                int colIdVestuario = c.getColumnIndex("id_vestuario");
+                id_vestuarios.add(c.getLong(colIdVestuario));
             }
-
-            Log.i("", "Montagem_Vestuario listada com sucesso");
         } catch (Exception e) {
-            Log.i("", "Exceção " + e.getMessage());
+            System.err.print("O erro está aqui:" + e);
+            id_vestuarios = null;
+        } finally {
+            le.close();
         }
 
-        return montagem_vestuarios;
-    }
-
-    public List<Vestuario> listarVestuarios(List<Montagem_Vestuario> list_montagem_vestuario) {
-        List<Vestuario> vestuarios = new ArrayList<>();
-
-        //PERCORRER LISTA DE MONTAGEM_VESTUARIO
-        //BUSCAR CADA VESTUARIO DE ACORDO COM SEU RESPECTIVO ID
-        //RETORNAR LISTA COM TODOS VESTUARIO DA MONTAGEM
-
-        return vestuarios;
+        return id_vestuarios;
     }
 
     public boolean deletar(Long id_montagem) {
+        escreve = DbHelper.database.getWritableDatabase();
         try {
             String[] argumentos = {id_montagem + ""};
-            write.delete(DbHelper.TABELA_MONTAGEM_VESTUARIO, "id_montagem = ?", argumentos );
-            Log.i("INFO", "Montagem_Vestuario removida com sucesso!");
+            escreve.delete(DbHelper.TABELA_MONTAGEM_VESTUARIO, "id_montagem = ?", argumentos );
+            status = true;
         }catch (Exception e){
-            Log.e("INFO", "Erro ao remover montagem_vestuario" + e.getMessage() );
-            return false;
+            status = false;
+        } finally {
+            escreve.close();
         }
-
-        return true;
+        return status;
     }
 
 }

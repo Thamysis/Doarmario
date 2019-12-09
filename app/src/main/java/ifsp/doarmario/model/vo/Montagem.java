@@ -1,19 +1,26 @@
 package ifsp.doarmario.model.vo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Montagem implements Serializable {
     private Long id_montagem;
-    private Date data_montagem;
-    private String data;
+    private String data_montagem;
 
     public Montagem() {
     }
 
-    public Montagem(Long id_montagem, String data) {
+    public Montagem(Long id_montagem, String data_montagem) {
         this.id_montagem = id_montagem;
-        this.data = data;
+        this.data_montagem = data_montagem;
+    }
+    public Montagem( String data_montagem) {
+        this.data_montagem = data_montagem;
+    }
+
+    public Montagem( Date dataUtil) {
+        this.data_montagem = converteDeDateParaString(dataUtil);
     }
 
     public Long getId_montagem() {
@@ -25,20 +32,21 @@ public class Montagem implements Serializable {
     }
 
     public String getData() {
-        return data;
+        return data_montagem;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setData(Date dataUtil) {
+        this.data_montagem = converteDeDateParaString(dataUtil);
     }
 
-    public static Long converterToLong(Date data_date) {
-        Long data_long = new Long(data_date.getTime());
-        return data_long;
+    public void setData_montagem(String data_montagem){
+        this.data_montagem = data_montagem;
     }
 
-    public static Date converterToDate(Long data_long) {
-        Date data = new Date(data_long);
-        return data;
+    public String converteDeDateParaString(Date datautil){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dataconvertida = dateFormat.format(datautil);
+        return dataconvertida;
     }
+
 }

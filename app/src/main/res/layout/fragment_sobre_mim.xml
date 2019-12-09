@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center|center_horizontal|center_vertical"
-    android:gravity="center|center_horizontal|center_vertical"
+    android:layout_gravity="center"
+    android:gravity="center"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="50dp">
 
         <TextView
             android:layout_width="0dp"
@@ -84,41 +85,58 @@
             android:layout_weight="2"
             android:autofillHints=""
             android:ems="10"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:textColor="@color/colorBlack"
             android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/bttSalvar"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/btt_add"
-            android:contentDescription="@string/_10"
-            android:onClick="atualizar"
-            app:srcCompat="@drawable/ic_save"
-            tools:ignore="VectorDrawableCompat" />
+            android:layout_gravity="end"
+            android:layout_marginTop="20dp"
+            android:gravity="end"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/bttRemover"
+            <Button
+                android:id="@+id/bttSalvar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_botao_adicionar"
+                android:gravity="end"
+                android:padding="15dp"
+                android:text="@string/btt_salvar"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btt_add"
-            android:contentDescription="@string/_10"
-            android:onClick="deletar"
-            app:srcCompat="@drawable/ic_delete"
-            tools:ignore="VectorDrawableCompat" />
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|end"
+            android:layout_marginTop="20dp"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingBottom="20dp">
+
+            <ImageButton
+                android:id="@+id/bttRemover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="@drawable/btt_add"
+                android:contentDescription="@string/_10"
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="VectorDrawableCompat" />
+        </LinearLayout>
 
     </LinearLayout>
 

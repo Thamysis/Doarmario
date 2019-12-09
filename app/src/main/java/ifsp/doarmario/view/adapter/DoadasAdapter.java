@@ -1,6 +1,7 @@
 package ifsp.doarmario.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,10 +38,10 @@ public class DoadasAdapter extends RecyclerView.Adapter<DoadasAdapter.MyViewHold
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         Vestuario vestuario = listaVestuarios.get(position);
-        //holder.textView.setText( vestuario.getDescricao_vestuario() + "" );
 
         if(vestuario.getImagem_vestuario() != null){
-            holder.imageView.setImageBitmap(BitmapFactory.decodeFile(vestuario.getImagem_vestuario()));
+            Bitmap img = BitmapFactory.decodeFile(vestuario.getImagem_vestuario());
+            holder.imageView.setImageBitmap(img);
         } else{
         }
     }

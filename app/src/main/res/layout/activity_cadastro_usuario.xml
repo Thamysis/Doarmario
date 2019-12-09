@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    tools:context=".activity.AddUsuarioActivity" >
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,8 +8,7 @@
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    tools:context=".activity.AddUsuarioActivity">
+    android:paddingRight="20dp">
 
     <EditText
         android:id="@+id/txtNome"
@@ -83,6 +73,4 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp" />
     </LinearLayout>
-
 </LinearLayout>
-</ScrollView>

@@ -6,8 +6,6 @@ public class Montagem_Vestuario implements Serializable {
     private Long id_montagem;
     private Long id_vestuario;
 
-    public Montagem_Vestuario(){}
-
     public Montagem_Vestuario(Long id_montagem, Long id_vestuario) {
         this.id_montagem = id_montagem;
         this.id_vestuario = id_vestuario;

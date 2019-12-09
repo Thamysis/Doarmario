@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -13,16 +14,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.UsuarioDao;
 import ifsp.doarmario.model.vo.Usuario;
+import ifsp.doarmario.view.ui.sair.SairFragment;
 
 public class SobreMimFragment extends Fragment {
     private TextView txtNomeUsuario;
     private EditText txtEmail;
     private EditText txtSenha;
-    private ImageButton bttSalvar;
+    private Button bttSalvar;
     private ImageButton bttRemover;
 
     private String nomeUsuarioAtual;
@@ -82,6 +86,12 @@ public class SobreMimFragment extends Fragment {
 
                         if(deletar) {
                             Toast.makeText(getActivity(), R.string.usuario_del_sucesso, Toast.LENGTH_SHORT).show();
+                            SairFragment sairFragment = new SairFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.nav_host_fragment, sairFragment);
+                            fragmentManager.popBackStack();
+                            fragmentTransaction.commit();
                         } else {
                             Toast.makeText(getActivity(), R.string.usuario_del_erro, Toast.LENGTH_SHORT).show();
                         }
@@ -106,9 +116,8 @@ public class SobreMimFragment extends Fragment {
 
     //recuperar dados do usuário para listagem
     private void recuperarUsuario() {
-        Toast.makeText(getActivity(), nomeUsuarioAtual, Toast.LENGTH_SHORT).show();
-
         Usuario usuarioRecuperado = UsuarioDao.usuarioDao.detalhar(nomeUsuarioAtual);
+
         if(usuarioRecuperado != null) {
             txtNomeUsuario.setText(usuarioRecuperado.getNome_usuario());
             txtEmail.setText(usuarioRecuperado.getEmail());

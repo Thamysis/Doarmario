@@ -12,91 +12,128 @@ import java.util.List;
 import ifsp.doarmario.model.vo.Montagem;
 
 public class MontagemDao {
-    private SQLiteDatabase write;
-    private SQLiteDatabase read;
-
-    public MontagemDao(Context context) {
-        //DbHelper db = new DbHelper(context);
-        write = DbHelper.database.getWritableDatabase();
-        read = DbHelper.database.getReadableDatabase();
-
-        //Usuario usuarioTeste = new Usuario("yasmin_deodato", "yasmin.deodato.beatriz@gmail.com", "yasmin123");
-        //salvar(usuarioTeste);
-    }
+    private SQLiteDatabase escreve;
+    private SQLiteDatabase le;
+    private boolean status;
 
     public boolean salvar(Montagem montagem) {
-        ContentValues cv = new ContentValues();
-        cv.put("id_montagem", montagem.getId_montagem());
-        cv.put("data_montagem", montagem.getData());
-        //cv.put("data_montagem" + montagem.converterData(montagem.getData_montagem()));
+        escreve = DbHelper.database.getWritableDatabase();
 
-        //o segundo parâmetro é para ter uma coluna específica como null
+        ContentValues cv = new ContentValues();
+        cv.put("data_montagem", montagem.getData() );
+
         try {
-            write.insert(DbHelper.TABELA_MONTAGEM, null, cv);
+            escreve.insert(DbHelper.TABELA_MONTAGEM, null, cv);
+            status = true;
         } catch (Exception e) {
-            Log.i("", "excecao " + e.getMessage());
-            return false;
+            status = false;
+        } finally {
+            escreve.close();
         }
 
-        return true;
+        return status;
     }
 
     public List<Montagem> listar() {
+        le = DbHelper.database.getReadableDatabase();
         List<Montagem> montagens = new ArrayList<>();
 
         String sql = "SELECT * FROM " + DbHelper.TABELA_MONTAGEM + ";";
 
-        //segundo parâmetro são filtros
-        Cursor c = read.rawQuery(sql, null);
+        Cursor c = le.rawQuery(sql, null);
 
         while (c.moveToNext()) {
             Montagem montagem = new Montagem();
             montagem.setId_montagem(c.getLong(c.getColumnIndex("id_montagem")));
-            //montagem.setData_montagem(montagem.converterDataStr(c.getString(c.getColumnIndex("data_montagem"))));
+            montagem.setData_montagem(c.getString(c.getColumnIndex("data_montagem")));
 
             montagens.add(montagem);
+        }
+
+        le.close();
+        return montagens;
+    }
+
+    public Montagem getUltimaMontagem() {
+        le = DbHelper.database.getReadableDatabase();
+        Montagem montagem = new Montagem();
+
+        String sql = "SELECT * FROM " + DbHelper.TABELA_MONTAGEM + ";";
+
+        Cursor c = le.rawQuery(sql, null);
+
+        while (c.moveToNext()) {
+            montagem.setId_montagem(c.getLong(c.getColumnIndex("id_montagem")));
+            montagem.setData_montagem(c.getString(c.getColumnIndex("data_montagem")));
+        }
+
+        le.close();
+        return montagem;
+    }
+
+    public ArrayList<Montagem> listar_data(String data, String usuario) {
+        le = DbHelper.database.getReadableDatabase();
+
+        ArrayList<Montagem> montagens = new ArrayList<>();
+
+        String sql = "" +
+                "SELECT * FROM " + DbHelper.TABELA_MONTAGEM + ", " + DbHelper.TABELA_VESTUARIO
+                + " INNER JOIN Montagem_vestuario on Vestuario.id_vestuario = Montagem_vestuario.id_vestuario "
+                + " WHERE nome_usuario = '" + usuario + "' and data_montagem LIKE '%" + data + "%';";
+
+        try {
+            Cursor c = le.rawQuery(sql, null);
+
+            //c.moveToFirst();
+            while (c.moveToNext()) {
+                Montagem montagem = new Montagem();
+
+                montagem.setId_montagem(c.getLong(c.getColumnIndex("id_montagem")));
+                montagem.setData_montagem(c.getString(c.getColumnIndex("data_montagem")));
+
+                montagens.add(montagem);
+            }
+        } catch (Exception e) {
+            System.err.print(e);
+            montagens = null;
+        } finally {
+            le.close();
         }
 
         return montagens;
     }
 
-    public Montagem detalhar(Long id_montagem) {
-        Montagem montagem = new Montagem();
+    public ArrayList<Montagem> listar_usuario(String usuario) {
+        le = DbHelper.database.getReadableDatabase();
 
-        String sql = "SELECT * FROM " + DbHelper.TABELA_MONTAGEM + " WHERE id_montagem = ?";
+        ArrayList<Montagem> montagens = new ArrayList<>();
 
-        //segundo parâmetro são filtros
+        String sql = "" +
+                "SELECT * FROM " + DbHelper.TABELA_MONTAGEM + ", " + DbHelper.TABELA_VESTUARIO
+                + " INNER JOIN Montagem_vestuario on Vestuario.id_vestuario = Montagem_vestuario.id_vestuario "
+                + " INNER JOIN Montagem_vestuario on Montagem.id_montagem = Montagem_vestuario.id_montagem "
+                + " WHERE nome_usuario = '" + usuario + "';";
+
         try {
-            Cursor c = read.rawQuery(sql, new String[]{id_montagem + ""});
+            Cursor c = le.rawQuery(sql, null);
 
-            int colIdMontagem = c.getColumnIndex("id_montagem");
-            int colDataMontagem = c.getColumnIndex("data_montagem");
+            //c.moveToFirst();
+            while (c.moveToNext()) {
+                Montagem montagem = new Montagem();
 
-            c.moveToFirst();
-            montagem.setId_montagem(c.getLong(colIdMontagem));
-            //montagem.setData_montagem(montagem.converterDataStr(c.getString(colDataMontagem)));
+                montagem.setId_montagem(c.getLong(c.getColumnIndex("id_montagem")));
+                montagem.setData_montagem(c.getString(c.getColumnIndex("data_montagem")));
 
-            Log.i("", "Montagem listada com sucesso");
+                montagens.add(montagem);
+                Log.i("montagem", "id montagem = " + montagem.getId_montagem());
+            }
         } catch (Exception e) {
-            Log.i("", "Exceção " + e.getMessage());
+            System.err.print(e);
+            montagens = null;
+        } finally {
+            le.close();
         }
 
-        return montagem;
-    }
-
-    public boolean deletar(Montagem montagem) {
-        try {
-            String[] argumentos = {montagem.getId_montagem() + ""};
-            //REMOVER ANTES DA TABEsLA MONTAGEM_VESTUARIO
-            //Montagem_VestuarioDao.montagem_VestuarioDao.deletar(montagem.getId_montagem());
-
-            write.delete(DbHelper.TABELA_MONTAGEM, "id_montagem = ?", argumentos );
-            Log.i("INFO", "Montagem removida com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao remover montagem " + e.getMessage() );
-            return false;
-        }
-
-        return true;
+        return montagens;
     }
 }

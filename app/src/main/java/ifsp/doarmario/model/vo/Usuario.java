@@ -11,10 +11,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Usuario(String nome_usuario, String email){
-        this.nome_usuario = nome_usuario;
-        this.email = email;
-    }
     public Usuario(){    }
 
     public String getNome_usuario() {

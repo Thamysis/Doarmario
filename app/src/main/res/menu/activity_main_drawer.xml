@@ -33,9 +33,9 @@
                 android:title="@string/peças_doadas" />
 
             <item
-                android:id="@+id/listagem_naoutilizadas"
+                android:id="@+id/cadastrar_doacao"
                 android:icon="@drawable/menu_listapecasnaoutilizadas"
-                android:title="@string/peças_nao_utilizadas" />
+                android:title="@string/peças_doacao" />
             <item
                 android:id="@+id/listagem_montagens"
                 android:icon="@drawable/menu_listamontagem"

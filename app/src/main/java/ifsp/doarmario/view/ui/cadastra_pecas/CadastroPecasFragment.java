@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +38,10 @@ import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.CategoriaDAO;
 import ifsp.doarmario.model.dao.CorDAO;
 import ifsp.doarmario.model.dao.MarcadorDAO;
-import ifsp.doarmario.model.dao.Marcador_VestuarioDAO;
 import ifsp.doarmario.model.dao.VestuarioDAO;
 import ifsp.doarmario.model.vo.Categoria;
 import ifsp.doarmario.model.vo.Cor;
 import ifsp.doarmario.model.vo.Marcador;
-import ifsp.doarmario.model.vo.Marcador_Vestuario;
 import ifsp.doarmario.model.vo.Vestuario;
 import ifsp.doarmario.view.ui.MainActivity;
 import ifsp.doarmario.view.ui.pagina_inicial.PaginaInicialFragment;
@@ -66,7 +63,6 @@ public class CadastroPecasFragment extends Fragment {
     private String nomeUsuarioAtual;
     private VestuarioDAO vestuarioDAO;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cadastro_pecas, container, false);
 
@@ -74,7 +70,7 @@ public class CadastroPecasFragment extends Fragment {
         nomeUsuarioAtual = (String) getActivity().getIntent().getSerializableExtra("usuario");
 
        ((MainActivity) getActivity()).setToolbarTitle("Cadastrar peças");
-        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
+        vestuarioDAO = new VestuarioDAO();
         btt_imagem_vestuario = view.findViewById(R.id.btt_seleciona_img_vestuario);
         edit_descricao_vestuario = view.findViewById(R.id.descricao_vestuario);
         btt_adicionar = view.findViewById(R.id.bttAdicionar);
@@ -84,10 +80,9 @@ public class CadastroPecasFragment extends Fragment {
         spn_categoia = (Spinner) view.findViewById(R.id.spnCategoria);
         spn_marcador = (Spinner) view.findViewById(R.id.spnMarcadores);
 
-        CorDAO corDAO = new CorDAO(getActivity());
-        CategoriaDAO categoriaDAO = new CategoriaDAO(getActivity());
-        MarcadorDAO marcadorDAO = new MarcadorDAO(getActivity());
-        final Marcador_VestuarioDAO marcador_vestuarioDAO = new Marcador_VestuarioDAO(getActivity());
+        CorDAO corDAO = new CorDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        MarcadorDAO marcadorDAO = new MarcadorDAO();
 
         ArrayList<Cor> corLista = corDAO.listar();
         ArrayList<Categoria> categoriaLista = categoriaDAO.listar();
@@ -108,7 +103,7 @@ public class CadastroPecasFragment extends Fragment {
         ArrayList<String> itens = new ArrayList<String>();
         itens.add("Câmera");
         itens.add("Galeria");
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.item_picker, itens);
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.adapter_item_picker, itens);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Selecione como deseja escolher a imagem.");
 
@@ -147,37 +142,23 @@ public class CadastroPecasFragment extends Fragment {
                 Marcador marcador = (Marcador) spn_marcador.getSelectedItem();
 
                 if ((!descricao_vestuario.isEmpty()) && (url_imagem != null) ) {
-                    Vestuario vestuario = new Vestuario(descricao_vestuario,url_imagem, status_vestuario,
-                            cor.getId_cor(), categoria.getId_categoria(), nomeUsuarioAtual);
-               if (vestuarioDAO.salvar(vestuario)) {
-                        vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext());
-                        Long marcador_id_vestuario = vestuarioDAO.idUtlimoVestuario(nomeUsuarioAtual);
 
-                        Marcador_Vestuario marcador_vestuario = new Marcador_Vestuario(
-                                marcador.getId_marcador(), marcador_id_vestuario);
+                    Vestuario vestuario = new Vestuario(descricao_vestuario, url_imagem, status_vestuario,
+                            cor.getId_cor(), categoria.getId_categoria(), marcador.getId_marcador(), nomeUsuarioAtual);
 
-                        //nota: fechar fragmento e voltar pra págiina inicial
+                    if (vestuarioDAO.salvar(vestuario)) {
+                        //ir para o fragment inicial
+                        PaginaInicialFragment paginaInicialFragment = new PaginaInicialFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
+                        fragmentTransaction.commit();
 
-                        if(marcador_vestuarioDAO.salvar(marcador_vestuario)){
-
-
-                            Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!",
-                                    Toast.LENGTH_SHORT).show();
-
-                            PaginaInicialFragment paginaInicialFragment = new PaginaInicialFragment();
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.nav_host_fragment, paginaInicialFragment);
-
-                            fragmentTransaction.commit();
-
-                        }
-                    }
-                    else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Sucesso ao salvar Vestuário!", Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(getActivity().getApplicationContext(), "Erro ao salvar Vestuário!", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
 
@@ -246,26 +227,26 @@ public class CadastroPecasFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode) {
                 case IMAGE_GALLERY_REQUEST:
-                    //data.getData return the content URI for the selected Image
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    // Get the cursor
                     Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    // Move to first row
                     cursor.moveToFirst();
-                    //Get the column index of MediaStore.Images.Media.DATA
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    //Gets the String value in the column
                     url_imagem = cursor.getString(columnIndex);
-
                     cursor.close();
-                    // Set the Image in ImageView after decoding the String
+
+//                    btt_imagem_vestuario.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//                    Bitmap img = BitmapFactory.decodeFile(vestuario.getImagem_vestuario());
+//                    Bitmap imgNovo = Bitmap.createScaledBitmap(img, holder.imageView.getMeasuredWidth(), holder.imageView.getMeasuredHeight(), false);
+//                    holder.imageView.setImageBitmap(imgNovo);
+//
+//
+
                     btt_imagem_vestuario.setImageBitmap(BitmapFactory.decodeFile(url_imagem));
                     break;
                 case REQUEST_IMAGE_CAPTURE:
                     try {
                         //url_imagem = String.valueOf(getContentResolver().openInputStream(Uri.parse(mCurrentPhotoPath)));
-
                         Bitmap bm1 = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(Uri.parse(mCurrentPhotoPath)));
                         btt_imagem_vestuario.setImageBitmap(bm1);
                     } catch (FileNotFoundException fnex) {

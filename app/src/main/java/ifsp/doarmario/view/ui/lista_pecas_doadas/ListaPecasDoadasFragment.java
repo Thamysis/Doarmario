@@ -27,7 +27,7 @@ public class ListaPecasDoadasFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista_pecas_doadas, container, false);
+        View view = inflater.inflate(R.layout.fragment_listagem_pecas_doadas, container, false);
         recyclerView =  view.findViewById(R.id.recyclerViewD);
 
         //recuperar nome do usuário atual
@@ -94,7 +94,7 @@ public class ListaPecasDoadasFragment extends Fragment {
     }
 
     public void carregarListaVestuario(){
-        VestuarioDAO vestuarioDAO = new VestuarioDAO(getActivity().getApplicationContext() );
+        VestuarioDAO vestuarioDAO = new VestuarioDAO();
         listaVestuario = vestuarioDAO.listarDoadas(nomeUsuarioAtual);
         vestuarioAdapter = new DoadasAdapter( listaVestuario, getActivity().getApplicationContext() );
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 3 );

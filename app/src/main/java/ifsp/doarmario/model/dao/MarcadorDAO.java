@@ -1,46 +1,35 @@
 package ifsp.doarmario.model.dao;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import ifsp.doarmario.model.vo.Marcador;
-import ifsp.doarmario.model.vo.Marcador_Vestuario;
-import ifsp.doarmario.model.vo.Vestuario;
 
 public class MarcadorDAO {
     private SQLiteDatabase escreve;
     private SQLiteDatabase le;
-    DbHelper helper;
-    public MarcadorDAO(Context context){
-        helper = new DbHelper(context);
-        escreve = helper.getWritableDatabase();
-        le = helper.getReadableDatabase();
-    }
+    private boolean status;
 
     public boolean salvar(Marcador marcador) {
+        escreve = DbHelper.database.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("descricao_marcador", marcador.getDescricao_marcador());
 
         try {
             escreve.insert(DbHelper.TABELA_MARCADOR, null, cv);
-            Log.i("INFO", "Marcador salvo com sucesso!");
+            status = true;
         }catch (Exception e){
-            Log.i("INFO", "Erro ao salvar marcador!" + e.getMessage()) ;
-            return false;
+            status = false;
+        } finally {
+            escreve.close();
         }
-        escreve.close();
-        return true;
+
+        return status;
     }
 
     public ArrayList<Marcador> listar() {
-        le = helper.getReadableDatabase();
+        le = DbHelper.database.getReadableDatabase();
         ArrayList<Marcador> listaMarcadores = new ArrayList<>();
 
         String sql = "SELECT * FROM " + DbHelper.TABELA_MARCADOR + " ORDER BY descricao_marcador;";
@@ -57,94 +46,32 @@ public class MarcadorDAO {
 
             listaMarcadores.add( marcador );
         }
-        le.close();
-        Log.i("INFO", listaMarcadores.toString());
 
+        le.close();
         return listaMarcadores;
     }
 
-    public boolean atualizar(Marcador marcador) {
-        ContentValues cv = new ContentValues();
-        cv.put("descricao_marcador", marcador.getDescricao_marcador() );
+    public Marcador detalhar(Long id){
+        le = DbHelper.database.getReadableDatabase();
 
-        try {
-            String[] args = {marcador.getId_marcador().toString()};
-            escreve.update(DbHelper.TABELA_MARCADOR, cv, "id_marcador=?", args );
-            Log.i("INFO", "Marcador atualizado com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao atualizar marcador! " + e.getMessage() );
-            return false;
-        }
-        escreve.close();
-        return true;
-    }
-
-    public boolean deletar(Marcador marcador) {
-        try {
-            String[] args = { marcador.getId_marcador().toString() };
-            escreve.delete(DbHelper.TABELA_MARCADOR, "id_marcador=?", args );
-            Log.i("INFO", "Marcador removida com sucesso!");
-        }catch (Exception e){
-            Log.e("INFO", "Erro ao remover marcador! " + e.getMessage() );
-            return false;
-        }
-        escreve.close();
-        return true;
-
-    }
-
-    public Marcador detalhar (Long id){
-        le = helper.getReadableDatabase();
+        Marcador marcador = new Marcador();
         String sql = "SELECT * FROM " + DbHelper.TABELA_MARCADOR + " WHERE ID_MARCADOR =" + id + " ;";
         Cursor c = le.rawQuery(sql, null);
 
-        while ( c.moveToNext() ){
-
-            Marcador marcador = new Marcador();
+        try {
+            c.moveToFirst();
 
             Long id_marcador = c.getLong( c.getColumnIndex("id_marcador") );
             String descricao_marcador = c.getString( c.getColumnIndex("descricao_marcador") );
 
             marcador.setId_marcador( id_marcador );
             marcador.setDescricao_marcador( descricao_marcador);
-
-            return marcador;
+        } catch (Exception e) {
+            marcador = null;
+        } finally {
+            le.close();
         }
-        le.close();
-        return null;
+
+        return marcador;
     }
-<<<<<<< HEAD
-    /*
-    public List<Marcador> retornaMarcadoresPeca(List<Marcador_Vestuario> listaMarcadoresVestuario) {
-=======
-    public List<Marcador> retornaMarcadorPeca(Long idVestuario) {
->>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
-        List<Marcador> listaMarcadores = new ArrayList<>();
-        String sql = "SELECT * FROM " + " marcador "
-                + " INNER JOIN marcador_vestuario on marcador_vestuario.id_marcador = marcador.id_marcador "
-                + " WHERE marcador_vestuario.id_vestuario =  " + idVestuario
-                + ";";
-        Log.i("INFO", sql);
-        Cursor c = le.rawQuery(sql, null);
-
-        while (c.moveToNext()) {
-            Marcador marcador = new Marcador();
-
-            Long id_marcador = c.getLong(c.getColumnIndex("id_marcador"));
-            String descricao_marcador = c.getString(c.getColumnIndex("descricao_marcador"));
-
-            marcador.setId_marcador(id_marcador);
-            marcador.setDescricao_marcador(descricao_marcador);
-
-            listaMarcadores.add(marcador);
-            Log.i("INFO", marcador.getDescricao_marcador());
-        }
-        le.close();
-        return listaMarcadores;
-    }
-<<<<<<< HEAD
-
-     */
-=======
->>>>>>> 21747be8e9fa1904092d0c9f9cda7d7fe1d168b5
 }

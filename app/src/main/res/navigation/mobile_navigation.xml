@@ -33,23 +33,23 @@
         android:id="@+id/listagem_pecas"
         android:name="ifsp.doarmario.view.ui.lista_pecas.ListaPecasFragment"
         android:label="@string/pecas"
-        tools:layout="@layout/fragment_lista_pecas" />
+        tools:layout="@layout/fragment_listagem_pecas" />
 
     <fragment
         android:id="@+id/listagem_doadas"
         android:name="ifsp.doarmario.view.ui.lista_pecas_doadas.ListaPecasDoadasFragment"
         android:label="@string/peças_doadas"
-        tools:layout="@layout/fragment_lista_pecas_doadas" />
+        tools:layout="@layout/fragment_listagem_pecas_doadas" />
 
     <fragment
-        android:id="@+id/listagem_naoutilizadas"
-        android:name="ifsp.doarmario.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment"
-        android:label="@string/peças_nao_utilizadas"
-        tools:layout="@layout/fragment_lista_pecas_nao_utilizadas" />
+        android:id="@+id/cadastrar_doacao"
+        android:name="ifsp.doarmario.view.ui.cadastrar_doacao.CadastrarDoacaoFragment"
+        android:label="@string/peças_doacao"
+        tools:layout="@layout/fragment_cadastrar_doacao" />
 
     <fragment
         android:id="@+id/listagem_montagens"
-        android:name="ifsp.doarmario.view.ui.montagens.MontagensFragment"
+        android:name="ifsp.doarmario.view.ui.montagens.ListarMontagensFragment"
         android:label="@string/montagens"
         tools:layout="@layout/fragment_montagens" />
 

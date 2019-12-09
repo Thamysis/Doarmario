@@ -15,8 +15,8 @@
 
         <ImageButton
             android:id="@+id/btt_seleciona_img_vestuario"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_camera"

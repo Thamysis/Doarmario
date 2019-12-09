@@ -18,7 +18,7 @@ import android.widget.Toast;
 import ifsp.doarmario.R;
 import ifsp.doarmario.model.dao.UsuarioDao;
 import ifsp.doarmario.model.vo.Usuario;
-import ifsp.doarmario.view.ui.lista_pecas_naoutilizadas.ListaPecasNaoUtilizadasFragment;
+import ifsp.doarmario.view.ui.cadastrar_doacao.CadastrarDoacaoFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.monta_pecas,
                 R.id.listagem_pecas,
                 R.id.listagem_doadas,
-                R.id.listagem_naoutilizadas,
+                R.id.cadastrar_doacao,
                 R.id.listagem_montagens,
                 R.id.perfil,
                 R.id.sobre_desenvolvedoras
@@ -75,8 +75,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        Toast.makeText(this, getString(R.string.bem_vindo) + nomeUsuarioAtual , Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(this,  getString(R.string.bem_vindo) + nomeUsuarioAtual , Toast.LENGTH_SHORT).show();
 
     }
 
@@ -84,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
         dialog.setTitle("Alerta");
         dialog.setMessage("Você possui peças que não estão sendo utilizadas com frequência. Sugerimos que você as doe ou as utilize mais! "  );
-        dialog.setPositiveButton("VER PEÇAS NÃO UTILIZADAS", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("CADASTRAR DOAÇÃO DE PEÇAS", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ListaPecasNaoUtilizadasFragment naoUtilizadasFragment = new ListaPecasNaoUtilizadasFragment();
+                CadastrarDoacaoFragment naoUtilizadasFragment = new CadastrarDoacaoFragment();
                 //nota: abrir fragmento nao_utilizados aqui
             }
         });
